@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Activity, ArrowRight, BarChart2, Info, ShieldCheck, Zap } from 'lucide-react'
 import { useI18n } from '@/context/I18nContext'
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher'
@@ -68,6 +69,7 @@ function LeftPanel() {
 export default function LoginPage() {
   const { t } = useI18n()
   const l = t.login
+  const router = useRouter()
   const [tab, setTab] = useState<'create' | 'login'>('login')
 
   return (
@@ -143,7 +145,7 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex flex-col gap-4" onSubmit={(e) => { e.preventDefault(); router.push('/dashboard') }}>
 
             {/* Create Account fields */}
             {tab === 'create' && (
