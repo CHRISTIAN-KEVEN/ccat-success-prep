@@ -68,7 +68,7 @@ function LeftPanel() {
 export default function LoginPage() {
   const { t } = useI18n()
   const l = t.login
-  const [tab, setTab] = useState<'create' | 'login'>('create')
+  const [tab, setTab] = useState<'create' | 'login'>('login')
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-start lg:items-center justify-center p-4 py-10 lg:p-6">
