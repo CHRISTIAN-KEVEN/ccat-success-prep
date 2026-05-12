@@ -1,0 +1,212 @@
+{
+  "nav": {
+    "login": "Connexion",
+    "startFree": "Commencer gratuitement"
+  },
+  "hero": {
+    "badge": "Nouveau : Exercices personnalisés 2.0 disponibles",
+    "title1": "Maîtrisez le CCAT avec",
+    "titleHighlight": "Précision Data",
+    "title2": "",
+    "subtitle": "Rejoignez 50 000+ candidats utilisant nos simulations haute-fidélité pour décrocher des postes chez Vista, Crossover et Amazon.",
+    "ctaPrimary": "Test Diagnostic Gratuit",
+    "ctaSecondary": "Explorer les fonctionnalités Pro",
+    "trustNoCreditCard": "Aucune carte bancaire requise",
+    "trustFreeTrial": "7 jours d'essai Pro gratuit",
+    "socialProof": "CANDIDATS RECRUTÉS PAR LES LEADERS DU SECTEUR",
+    "dashboard": {
+      "label": "PERFORMANCE ACTUELLE",
+      "percentile": "92e Percentile",
+      "verbal": "Verbal",
+      "numerical": "Numérique",
+      "spatial": "Spatial"
+    }
+  },
+  "features": {
+    "title": "Une préparation taillée pour la performance",
+    "subtitle": "On ne vous donne pas juste des tests. On vous donne une feuille de route stratégique vers le 90e percentile.",
+    "items": [
+      {
+        "icon": "timer",
+        "title": "Simulations chronométrées",
+        "description": "Entraînez-vous dans les conditions exactes du vrai CCAT : 15 minutes, 50 questions, pour développer une gestion du temps cruciale."
+      },
+      {
+        "icon": "chart",
+        "title": "Analytique approfondie",
+        "description": "Obtenez des insights détaillés sur vos performances Verbales, Numériques et Spatiales. Identifiez vos points faibles instantanément."
+      },
+      {
+        "icon": "target",
+        "title": "Exercices personnalisés",
+        "description": "Notre IA adaptive crée des séries d'entraînement quotidiennes ciblées sur les types de questions où vous avez le plus de difficultés."
+      },
+      {
+        "icon": "bolt",
+        "title": "Modules d'apprentissage rapide",
+        "description": "Leçons courtes et percutantes sur la logique spatiale et les raccourcis numériques, conçues pour les professionnels occupés."
+      },
+      {
+        "icon": "shield",
+        "title": "Banque de questions authentiques",
+        "description": "1 500+ questions modélisées sur les vrais patterns du test. Zéro remplissage, zéro logique obsolète, 100% pertinence."
+      },
+      {
+        "icon": "globe",
+        "title": "Données de référence",
+        "description": "Comparez vos performances avec des milliers de candidats réussis pour des rôles et entreprises spécifiques."
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Tarification simple et transparente",
+    "subtitle": "Commencez gratuitement. Passez Pro quand vous êtes prêt à décrocher votre poste de rêve.",
+    "recommended": "Recommandé",
+    "plans": [
+      {
+        "name": "Diagnostic Gratuit",
+        "description": "Parfait pour comprendre votre niveau de départ.",
+        "price": "0 €",
+        "period": "/pour toujours",
+        "cta": "Commencer le Diagnostic Gratuit",
+        "features": [
+          { "included": true, "text": "1 simulation complète" },
+          { "included": true, "text": "Rapport de score basique" },
+          { "included": false, "text": "Analytique de domaine non incluse" }
+        ]
+      },
+      {
+        "name": "CCAT Pro",
+        "description": "Tout ce qu'il faut pour maîtriser le test.",
+        "price": "49 €",
+        "period": "/mois",
+        "cta": "Essai Gratuit 7 Jours",
+        "recommended": true,
+        "features": [
+          { "included": true, "text": "Simulations illimitées" },
+          { "included": true, "text": "Analytique complète par domaine" },
+          { "included": true, "text": "1 500+ questions d'entraînement" },
+          { "included": true, "text": "Exercices quotidiens IA" }
+        ]
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Témoignages de réussite",
+    "items": [
+      {
+        "quote": "Les simulations chronométrées sont révolutionnaires. Je suis passé de 35 à 50 questions complétées en seulement deux semaines.",
+        "name": "Marcus Chen",
+        "role": "Ingénieur Logiciel chez Amazon",
+        "percentile": "98e Percentile"
+      },
+      {
+        "quote": "La logique numérique était ma faiblesse. L'analytique profonde m'a montré exactement où je perdais du temps dans mes calculs.",
+        "name": "Sarah Jenkins",
+        "role": "Chef de Produit chez Vista",
+        "percentile": "94e Percentile"
+      },
+      {
+        "quote": "CCAT Pro vaut chaque centime. C'est la plateforme de préparation la plus réaliste que j'ai trouvée après en avoir testé trois autres.",
+        "name": "David Miller",
+        "role": "Analyste Données chez Fintech Corp",
+        "percentile": "91e Percentile"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "items": [
+      {
+        "question": "Quelle est la précision de vos tests par rapport au vrai CCAT ?",
+        "answer": "Nos simulations sont conçues pour être identiques à 98% au vrai Criteria Cognitive Aptitude Test. Nous respectons la distribution des questions (Verbal, Numérique, Spatial), le minuteur strict de 15 minutes, et le niveau de difficulté basé sur les retours de milliers de candidats."
+      },
+      {
+        "question": "Puis-je annuler mon abonnement Pro à tout moment ?",
+        "answer": "Oui, vous pouvez annuler votre abonnement Pro à tout moment sans pénalité. Vous conserverez l'accès aux fonctionnalités Pro jusqu'à la fin de votre période de facturation."
+      },
+      {
+        "question": "Offrez-vous une garantie de score ?",
+        "answer": "Nous avons confiance en notre plateforme. Les candidats qui complètent au moins 5 simulations complètes et tous les exercices personnalisés voient une amélioration moyenne de 15+ points de percentile."
+      },
+      {
+        "question": "Qu'est-ce que le \"Test Diagnostic\" ?",
+        "answer": "Le Test Diagnostic gratuit est une simulation complète de 50 questions en 15 minutes qui reproduit le vrai CCAT. Après l'avoir complété, vous recevez un rapport de score de base montrant vos performances dans les catégories Verbal, Numérique et Spatial."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Prêt à décrocher votre prochain poste ?",
+    "subtitle": "Commencez votre préparation en 30 secondes. Inscription en un clic avec LinkedIn pour conserver votre profil professionnel.",
+    "primary": "Lancer le Diagnostic",
+    "linkedin": "Continuer avec LinkedIn"
+  },
+  "login": {
+    "leftBadge": "OFFRE LIMITÉE",
+    "leftTitle": "Maîtrisez le CCAT avec confiance.",
+    "leftSubtitle": "Rejoignez 12 000+ candidats qui ont utilisé CCAT Pro pour décrocher des postes dans des firmes de premier plan.",
+    "leftFeatures": [
+      { "icon": "chart", "title": "Analytique approfondie", "desc": "Identifiez vos faiblesses en raisonnement Verbal, Numérique et Spatial instantanément." },
+      { "icon": "bolt", "title": "Simulation du vrai examen", "desc": "Vivez la pression des 15 minutes et 50 questions avec un test haute-fidélité." },
+      { "icon": "shield", "title": "Succès vérifié", "desc": "Banques de questions alignées sur les derniers standards 2024 de Criteria Corp." }
+    ],
+    "trialBadge": "Essai Pro 7 jours actif",
+    "trialDesc": "Accès complet à tous les outils de simulation et à l'analytique approfondie.",
+    "trialNote": "Aucune carte bancaire requise pour le diagnostic.",
+    "tabLogin": "Connexion",
+    "tabCreate": "Créer un compte",
+    "titleCreate": "Créez votre compte",
+    "titleLogin": "Bon retour",
+    "titleForgot": "Réinitialisez votre mot de passe",
+    "subtitleCreate": "Choisissez votre méthode préférée pour continuer votre préparation.",
+    "subtitleLogin": "Connectez-vous à votre compte CCAT Pro.",
+    "subtitleForgot": "Entrez votre email professionnel pour recevoir un lien de réinitialisation sécurisé.",
+    "linkedin": "Continuer avec LinkedIn",
+    "google": "Continuer avec Google",
+    "orEmail": "OU CONTINUER AVEC L'EMAIL",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email professionnel",
+    "password": "Créer un mot de passe",
+    "passwordLogin": "Mot de passe",
+    "passwordHint": "8 caractères minimum avec au moins un chiffre.",
+    "terms": "En créant un compte, vous acceptez nos",
+    "termsLink": "Conditions d'utilisation",
+    "termsAnd": "et reconnaissez notre",
+    "privacyLink": "Politique de confidentialité",
+    "termsSuffix": "Nous vous enverrons un lien de vérification par email.",
+    "submitCreate": "Lancer le Diagnostic Gratuit",
+    "submitLogin": "Se connecter",
+    "submitForgot": "Envoyer le lien de réinitialisation",
+    "pricingLink": "Vous voulez voir les tarifs ?",
+    "pricingCta": "Voir les plans & fonctionnalités",
+    "gdpr": "CONFORME RGPD",
+    "deletion": "DEMANDE DE SUPPRESSION",
+    "enterprise": "AUTH ENTREPRISE",
+    "placeholderFirst": "Alex",
+    "placeholderLast": "Martin",
+    "placeholderEmail": "alex@entreprise.com",
+    "forgotPassword": "Mot de passe oublié ?",
+    "forgotHelper": "Nous vous enverrons un email avec un lien sécurisé pour créer un nouveau mot de passe et retrouver l'accès à votre compte.",
+    "backToLogin": "Retour à la connexion"
+  },
+  "footer": {
+    "tagline": "Préparation CCAT data-driven pour les professionnels qui visent l'excellence dans le recrutement haut de gamme.",
+    "product": {
+      "title": "Produit",
+      "links": ["Test Diagnostic", "Analytique de performance", "Tarifs"]
+    },
+    "resources": {
+      "title": "Ressources",
+      "links": ["Guide CCAT", "Plan d'étude", "FAQ"]
+    },
+    "company": {
+      "title": "Société",
+      "links": ["À propos", "Contact", "Sécurité"]
+    },
+    "copyright": "© 2024 CCAT Pro. Préparation scientifiquement fondée.",
+    "terms": "CGU",
+    "privacy": "Confidentialité",
+    "cookies": "Cookies"
+  }
+}

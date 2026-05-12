@@ -1,0 +1,212 @@
+{
+  "nav": {
+    "login": "Log in",
+    "startFree": "Start Free Test"
+  },
+  "hero": {
+    "badge": "New: Personalized Drills 2.0 now live",
+    "title1": "Master the CCAT with",
+    "titleHighlight": "Data-Driven",
+    "title2": "Precision",
+    "subtitle": "Join 50,000+ candidates using our high-fidelity simulations to land roles at Vista, Crossover, and Amazon.",
+    "ctaPrimary": "Take Free Diagnostic Test",
+    "ctaSecondary": "Explore Pro Features",
+    "trustNoCreditCard": "No credit card required",
+    "trustFreeTrial": "7-day free Pro trial",
+    "socialProof": "CANDIDATES HIRED BY INDUSTRY LEADERS",
+    "dashboard": {
+      "label": "CURRENT PERFORMANCE",
+      "percentile": "92nd Percentile",
+      "verbal": "Verbal",
+      "numerical": "Numerical",
+      "spatial": "Spatial"
+    }
+  },
+  "features": {
+    "title": "Preparation Built for Performance",
+    "subtitle": "We don't just give you practice tests. We give you a strategic roadmap to the 90th percentile.",
+    "items": [
+      {
+        "icon": "timer",
+        "title": "Timed Simulations",
+        "description": "Practice under the exact 15-minute, 50-question conditions of the real CCAT to build crucial time management skills."
+      },
+      {
+        "icon": "chart",
+        "title": "Deep Domain Analytics",
+        "description": "Get granular insights into your Verbal, Numerical, and Spatial reasoning. Identify specific weak points instantly."
+      },
+      {
+        "icon": "target",
+        "title": "Personalized Drills",
+        "description": "Our adaptive AI creates daily practice sets focused on the question types where you struggle the most."
+      },
+      {
+        "icon": "bolt",
+        "title": "Rapid Learning Modules",
+        "description": "Short, high-impact lessons on spatial logic and numerical shortcuts designed for busy professional schedules."
+      },
+      {
+        "icon": "shield",
+        "title": "Authentic Question Bank",
+        "description": "1,500+ questions modeled after the actual test patterns. No filler, no outdated logic, just pure relevance."
+      },
+      {
+        "icon": "globe",
+        "title": "Benchmark Data",
+        "description": "Compare your performance against thousands of successful applicants for specific roles and companies."
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Start for free. Upgrade when you're ready to secure your dream role.",
+    "recommended": "Recommended",
+    "plans": [
+      {
+        "name": "Free Diagnostic",
+        "description": "Perfect for understanding your baseline.",
+        "price": "$0",
+        "period": "/forever",
+        "cta": "Start Free Diagnostic",
+        "features": [
+          { "included": true, "text": "1 Full-length simulation" },
+          { "included": true, "text": "Basic score report" },
+          { "included": false, "text": "No domain analytics" }
+        ]
+      },
+      {
+        "name": "CCAT Pro",
+        "description": "Everything you need to master the test.",
+        "price": "$49",
+        "period": "/month",
+        "cta": "Start 7-Day Free Trial",
+        "recommended": true,
+        "features": [
+          { "included": true, "text": "Unlimited Simulations" },
+          { "included": true, "text": "Full Domain Analytics" },
+          { "included": true, "text": "1,500+ Practice Questions" },
+          { "included": true, "text": "Daily AI-Powered Drills" }
+        ]
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Success Stories",
+    "items": [
+      {
+        "quote": "The timed simulations are a game changer. I went from finishing 35 questions to all 50 in just two weeks.",
+        "name": "Marcus Chen",
+        "role": "Software Engineer at Amazon",
+        "percentile": "98th Percentile"
+      },
+      {
+        "quote": "Numerical logic was my weakness. The deep analytics showed me exactly where I was wasting time on calculations.",
+        "name": "Sarah Jenkins",
+        "role": "Product Manager at Vista",
+        "percentile": "94th Percentile"
+      },
+      {
+        "quote": "CCAT Pro is worth every penny. It's the most high-fidelity prep platform I've found after trying three others.",
+        "name": "David Miller",
+        "role": "Data Analyst at Fintech Corp",
+        "percentile": "91st Percentile"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "How accurate are your practice tests compared to the real CCAT?",
+        "answer": "Our simulations are engineered to be 98% identical to the actual Criteria Cognitive Aptitude Test. We match the question distribution (Verbal, Numerical, Spatial), the strict 15-minute timer, and the difficulty level based on feedback from thousands of successful test-takers."
+      },
+      {
+        "question": "Can I cancel my Pro subscription at any time?",
+        "answer": "Yes, you can cancel your Pro subscription at any time with no penalty. You'll retain access to Pro features until the end of your billing period."
+      },
+      {
+        "question": "Do you offer a score guarantee?",
+        "answer": "We're confident in our platform. Candidates who complete at least 5 full simulations and all personalized drills see an average improvement of 15+ percentile points."
+      },
+      {
+        "question": "What is the \"Diagnostic Test\"?",
+        "answer": "The free Diagnostic Test is a full-length, 50-question, 15-minute simulation that mirrors the real CCAT. After completing it, you receive a baseline score report showing your performance across Verbal, Numerical, and Spatial categories."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to secure your next role?",
+    "subtitle": "Start your preparation in 30 seconds. One-click sign-up with LinkedIn to preserve your professional profile.",
+    "primary": "Start Diagnostic Now",
+    "linkedin": "Continue with LinkedIn"
+  },
+  "login": {
+    "leftBadge": "LIMITED TIME OFFER",
+    "leftTitle": "Master the CCAT with Confidence.",
+    "leftSubtitle": "Join 12,000+ candidates who used CCAT Pro to land roles at top-tier firms.",
+    "leftFeatures": [
+      { "icon": "chart", "title": "Deep Domain Analytics", "desc": "Identify weaknesses in Verbal, Numerical, and Spatial reasoning instantly." },
+      { "icon": "bolt", "title": "Real Exam Simulation", "desc": "Experience the 15-minute, 50-question pressure with high-fidelity testing." },
+      { "icon": "shield", "title": "Verified Success", "desc": "Curated question banks aligned with the latest 2024 Criteria Corp standards." }
+    ],
+    "trialBadge": "7-Day Pro Trial Active",
+    "trialDesc": "Get full access to all simulation tools and deep-dive analytics.",
+    "trialNote": "No credit card required for diagnostic.",
+    "tabLogin": "Log In",
+    "tabCreate": "Create Account",
+    "titleCreate": "Create your account",
+    "titleLogin": "Welcome back",
+    "titleForgot": "Reset your password",
+    "subtitleCreate": "Choose your preferred method to continue your preparation.",
+    "subtitleLogin": "Sign in to your CCAT Pro account.",
+    "subtitleForgot": "Enter your work email to receive a secure password reset link.",
+    "linkedin": "Continue with LinkedIn",
+    "google": "Continue with Google",
+    "orEmail": "OR CONTINUE WITH EMAIL",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Work email",
+    "password": "Create password",
+    "passwordLogin": "Password",
+    "passwordHint": "Must be at least 8 characters with one number.",
+    "terms": "By creating an account, you agree to our",
+    "termsLink": "Terms of Service",
+    "termsAnd": "and acknowledge our",
+    "privacyLink": "Privacy Policy",
+    "termsSuffix": "We will send a verification link to your email.",
+    "submitCreate": "Start Free Diagnostic",
+    "submitLogin": "Log In",
+    "submitForgot": "Send reset link",
+    "pricingLink": "Just want to see pricing?",
+    "pricingCta": "View Plans & Features",
+    "gdpr": "GDPR COMPLIANT",
+    "deletion": "DATA DELETION REQUEST",
+    "enterprise": "ENTERPRISE AUTH",
+    "placeholderFirst": "Alex",
+    "placeholderLast": "Thompson",
+    "placeholderEmail": "alex@industry.com",
+    "forgotPassword": "Forgot password?",
+    "forgotHelper": "We will email you a secure link so you can create a new password and recover access to your account.",
+    "backToLogin": "Back to log in"
+  },
+  "footer": {
+    "tagline": "Data-driven CCAT preparation for professionals seeking to excel in high-stakes recruitment.",
+    "product": {
+      "title": "Product",
+      "links": ["Diagnostic Test", "Performance Analytics", "Pricing Plans"]
+    },
+    "resources": {
+      "title": "Resources",
+      "links": ["CCAT Guide", "Study Plan", "FAQ"]
+    },
+    "company": {
+      "title": "Company",
+      "links": ["About Us", "Contact", "Security"]
+    },
+    "copyright": "© 2024 CCAT Pro. Scientifically backed preparation.",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "cookies": "Cookies"
+  }
+}
