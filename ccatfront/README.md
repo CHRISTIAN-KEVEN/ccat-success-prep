@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CCAT Pro — Frontend
+
+Web application for CCAT (Criteria Cognitive Aptitude Test) preparation. Built with Next.js 15, Tailwind CSS v4, and TypeScript.
+
+## Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS v4 with CSS custom properties
+- **Language**: TypeScript
+- **Icons**: lucide-react
+- **Font**: Geist (via next/font)
+
+## Pages
+
+| Route | Description |
+|---|---|
+| `/` | Homepage — hero, features, pricing, testimonials, FAQ |
+| `/login` | Login / Create Account (tab switcher) |
+| `/dashboard` | Performance Analytics — stats, progression chart, domain breakdown |
+| `/dashboard/test` | Full-screen CCAT test simulation — 8 questions, 15-min timer |
+| `/dashboard/history` | Test History — past sessions with scores and category breakdown |
+| `/dashboard/settings` | Profile Settings — editable user form |
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── dashboard/
+│   │   ├── history/page.tsx
+│   │   ├── settings/page.tsx
+│   │   ├── test/page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── login/page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── layout/
+│   │   ├── DashboardNav.tsx
+│   │   ├── DashboardSidebar.tsx
+│   │   └── Navbar.tsx
+│   └── ui/
+│       ├── Button.tsx
+│       └── PricingCard.tsx
+├── context/
+│   └── I18nContext.tsx
+└── data/
+    ├── mockDashboard.ts
+    ├── mockQuestions.ts
+    └── locales/
+        ├── en.json
+        └── fr.json
+```
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## i18n
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+English / French language switching built with React Context (no external library). Toggle available in the homepage navbar.
 
-## Learn More
+## Dashboard Layout
 
-To learn more about Next.js, take a look at the following resources:
+Fixed layout: header + sidebar are static, only the main content area scrolls (`overflow-y-auto`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The test page (`/dashboard/test`) uses `fixed inset-0 z-50` to cover the full screen during a session.
