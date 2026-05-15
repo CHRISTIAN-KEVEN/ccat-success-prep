@@ -1,1 +1,1 @@
-export type AuthView = 'login' | 'register' | 'forgot' | 'otp' | 'reset'
+export type AuthView = 'login' | 'register' | 'verify' | 'forgot' | 'otp' | 'reset'

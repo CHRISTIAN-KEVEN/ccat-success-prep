@@ -1,16 +1,41 @@
+'use client'
+import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Info } from 'lucide-react'
+import { ArrowRight, Info, Loader2 } from 'lucide-react'
 import { useI18n } from '@/context/I18nContext'
+import { authService } from '@/lib/authService'
 import type { AuthView } from './types'
 
 type Props = {
   onNavigate: (v: AuthView) => void
-  onSubmit: () => void
+  onSubmit: (email: string) => void
 }
 
 export default function RegisterForm({ onNavigate, onSubmit }: Props) {
   const { t } = useI18n()
   const l = t.login
+
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      await authService.register(email, password, firstName, lastName)
+      onSubmit(email)
+    } catch (err: unknown) {
+      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Erreur lors de la création du compte'
+      setError(String(msg))
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <>
@@ -19,13 +44,11 @@ export default function RegisterForm({ onNavigate, onSubmit }: Props) {
         <p className="text-sm text-gray-500 mt-1">{l.subtitleCreate}</p>
       </div>
 
-      {/* Tab switcher */}
       <div className="flex border border-gray-200 rounded-lg overflow-hidden text-sm font-medium">
         <button type="button" onClick={() => onNavigate('login')} className="flex-1 py-2.5 text-gray-500 hover:bg-gray-50 transition-colors">{l.tabLogin}</button>
         <button type="button" className="flex-1 py-2.5 bg-gray-900 text-white">{l.tabCreate}</button>
       </div>
 
-      {/* Social */}
       <div className="flex flex-col gap-3">
         <button className="w-full flex items-center justify-center gap-2 bg-[#117db8] hover:bg-[#0f6ea2] text-white font-semibold text-sm py-3 rounded-lg transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -48,24 +71,30 @@ export default function RegisterForm({ onNavigate, onSubmit }: Props) {
         <div className="flex-1 h-px bg-gray-200" /><span>{l.orEmail}</span><div className="flex-1 h-px bg-gray-200" />
       </div>
 
-      <form className="flex flex-col gap-4" onSubmit={(e) => { e.preventDefault(); onSubmit() }}>
+      {error && <p className="text-sm text-red-500 bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
+
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-gray-700">{l.firstName}</label>
-            <input type="text" placeholder={l.placeholderFirst} className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
+            <input type="text" required placeholder={l.placeholderFirst} value={firstName} onChange={e => setFirstName(e.target.value)}
+              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-gray-700">{l.lastName}</label>
-            <input type="text" placeholder={l.placeholderLast} className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
+            <input type="text" required placeholder={l.placeholderLast} value={lastName} onChange={e => setLastName(e.target.value)}
+              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
           </div>
         </div>
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium text-gray-700">{l.email}</label>
-          <input type="email" placeholder={l.placeholderEmail} className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
+          <input type="email" required placeholder={l.placeholderEmail} value={email} onChange={e => setEmail(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
         </div>
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium text-gray-700">{l.password}</label>
-          <input type="password" className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
+          <input type="password" required minLength={8} value={password} onChange={e => setPassword(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
           <p className="text-xs text-gray-400">{l.passwordHint}</p>
         </div>
         <div className="flex items-start gap-2 text-xs text-gray-500 leading-relaxed">
@@ -78,8 +107,9 @@ export default function RegisterForm({ onNavigate, onSubmit }: Props) {
             {l.termsSuffix}
           </p>
         </div>
-        <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
-          {l.submitCreate} <ArrowRight size={15} />
+        <button type="submit" disabled={loading}
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold text-sm py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+          {loading ? <Loader2 size={15} className="animate-spin" /> : <>{l.submitCreate} <ArrowRight size={15} /></>}
         </button>
       </form>
 

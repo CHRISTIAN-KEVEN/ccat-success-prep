@@ -8,11 +8,13 @@ import RegisterForm from '@/components/auth/RegisterForm'
 import ForgotForm from '@/components/auth/ForgotForm'
 import OtpForm from '@/components/auth/OtpForm'
 import ResetForm from '@/components/auth/ResetForm'
+import { authService } from '@/lib/authService'
 import type { AuthView } from '@/components/auth/types'
 
 export default function LoginPage() {
   const router = useRouter()
   const [view, setView] = useState<AuthView>('login')
+  const [registerEmail, setRegisterEmail] = useState('')
   const [resetEmail, setResetEmail] = useState('')
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [resendCountdown, setResendCountdown] = useState(0)
@@ -39,10 +41,33 @@ export default function LoginPage() {
     else if (otp[i] && i < 5) refs.current[i + 1]?.focus()
   }
 
-  const startForgotFlow = () => {
+  const startOtpFlow = (nextView: AuthView) => {
     setOtp(['', '', '', '', '', ''])
     setResendCountdown(30)
-    setView('otp')
+    setView(nextView)
+  }
+
+  // OTP submit handler: verify email after registration
+  const handleVerifyEmail = async (code: string) => {
+    await authService.verifyEmail(registerEmail, code)
+    setView('login')
+  }
+
+  // OTP submit handler: validate code then go to reset form
+  const handleValidateResetOtp = async (_code: string) => {
+    // backend validates OTP on reset-password, so just navigate
+    setView('reset')
+  }
+
+  // Resend handlers
+  const handleResendVerification = async () => {
+    await authService.resendVerification(registerEmail)
+    setResendCountdown(30)
+  }
+
+  const handleResendReset = async () => {
+    await authService.forgotPassword(resetEmail)
+    setResendCountdown(30)
   }
 
   return (
@@ -58,13 +83,29 @@ export default function LoginPage() {
           {view === 'login' && (
             <LoginForm
               onNavigate={setView}
-              onSubmit={() => router.push('/dashboard')}
+              onSubmit={(role) => router.push(role === 'ADMIN' ? '/admin' : '/dashboard')}
             />
           )}
           {view === 'register' && (
             <RegisterForm
               onNavigate={setView}
-              onSubmit={() => router.push('/dashboard')}
+              onSubmit={(email) => {
+                setRegisterEmail(email)
+                startOtpFlow('verify')
+              }}
+            />
+          )}
+          {view === 'verify' && (
+            <OtpForm
+              email={registerEmail}
+              otp={otp}
+              resendCountdown={resendCountdown}
+              onOtpChange={handleOtpChange}
+              onOtpKey={handleOtpKey}
+              onResend={handleResendVerification}
+              onNavigate={setView}
+              onSubmit={handleVerifyEmail}
+              backView="register"
             />
           )}
           {view === 'forgot' && (
@@ -72,7 +113,7 @@ export default function LoginPage() {
               email={resetEmail}
               onEmailChange={setResetEmail}
               onNavigate={setView}
-              onSubmit={startForgotFlow}
+              onSubmit={() => startOtpFlow('otp')}
             />
           )}
           {view === 'otp' && (
@@ -82,13 +123,18 @@ export default function LoginPage() {
               resendCountdown={resendCountdown}
               onOtpChange={handleOtpChange}
               onOtpKey={handleOtpKey}
-              onResend={() => setResendCountdown(30)}
+              onResend={handleResendReset}
               onNavigate={setView}
-              onSubmit={() => setView('reset')}
+              onSubmit={handleValidateResetOtp}
+              backView="forgot"
             />
           )}
           {view === 'reset' && (
-            <ResetForm onSubmit={() => setView('login')} />
+            <ResetForm
+              email={resetEmail}
+              otp={otp.join('')}
+              onSubmit={() => setView('login')}
+            />
           )}
         </div>
       </div>

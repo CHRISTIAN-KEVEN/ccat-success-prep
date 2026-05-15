@@ -1,14 +1,13 @@
 'use client'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { Activity, HelpCircle, LayoutDashboard, Settings, LogOut, User } from 'lucide-react'
+import { Activity, Settings, LogOut, User } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { api } from '@/lib/apiClient'
-import { MobileSidebar } from './DashboardSidebar'
+import { MobileAdminSidebar } from './AdminSidebar'
 
-export default function DashboardNav() {
-  const pathname = usePathname() ?? ''
+export default function AdminNav() {
   const router = useRouter()
   const { user, clearSession } = useAuth()
   const [open, setOpen] = useState(false)
@@ -37,37 +36,25 @@ export default function DashboardNav() {
   return (
     <header className="bg-white border-b border-gray-200 h-14 flex items-center px-4 sm:px-6 shrink-0 z-40">
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        <MobileSidebar />
-        <Link href="/" className="flex items-center gap-2 font-bold text-gray-900 shrink-0">
+        <MobileAdminSidebar />
+        <Link href="/admin" className="flex items-center gap-2 font-bold text-gray-900 shrink-0">
           <Activity size={18} className="text-blue-600" />
-          <span className="hidden sm:inline">CCAT Pro</span>
+          <span className="hidden sm:inline">CCAT Admin</span>
         </Link>
-        <Link
-          href="/dashboard"
-          className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors ${
-            pathname.startsWith('/dashboard') ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-900'
-          }`}
-        >
-          <LayoutDashboard size={15} />
-          <span className="hidden sm:inline">Dashboard</span>
-        </Link>
+        <span className="text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold">ADMIN</span>
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3">
-        <button className="w-9 h-9 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors">
-          <HelpCircle size={18} />
-        </button>
-
         <div className="flex items-center gap-2 pl-2 sm:pl-3 border-l border-gray-200">
           <div className="text-right hidden sm:block">
             <p className="text-xs font-semibold text-gray-900 leading-tight">{fullName}</p>
-            <p className="text-[10px] text-blue-600 font-medium">{user?.emRole ?? ''}</p>
+            <p className="text-[10px] text-orange-500 font-medium">ADMINISTRATEUR</p>
           </div>
 
           <div className="relative" ref={ref}>
             <button
               onClick={() => setOpen(o => !o)}
-              className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center shrink-0 ring-2 ring-green-400 ring-offset-1 hover:ring-blue-400 transition-all"
+              className="w-8 h-8 rounded-full bg-orange-100 text-orange-700 font-bold text-xs flex items-center justify-center shrink-0 ring-2 ring-orange-400 ring-offset-1 hover:ring-orange-500 transition-all"
             >
               {initials}
             </button>
@@ -79,19 +66,19 @@ export default function DashboardNav() {
                   <p className="text-xs text-gray-500 truncate">{user?.strEmail}</p>
                 </div>
                 <div className="py-1">
-                  <button onClick={() => { setOpen(false); router.push('/dashboard/settings') }}
+                  <button onClick={() => { setOpen(false); router.push('/admin/settings') }}
                     className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <User size={15} className="text-gray-400" /> Profile
+                    <User size={15} className="text-gray-400" /> Profil
                   </button>
-                  <button onClick={() => { setOpen(false); router.push('/dashboard/settings') }}
+                  <button onClick={() => { setOpen(false); router.push('/admin/settings') }}
                     className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Settings size={15} className="text-gray-400" /> Settings
+                    <Settings size={15} className="text-gray-400" /> Paramètres
                   </button>
                 </div>
                 <div className="border-t border-gray-100 py-1">
                   <button onClick={handleLogout}
                     className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                    <LogOut size={15} /> Sign Out
+                    <LogOut size={15} /> Déconnexion
                   </button>
                 </div>
               </div>
