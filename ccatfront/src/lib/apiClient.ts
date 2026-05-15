@@ -1,4 +1,6 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
+import { config } from './config'
+
+const BASE_URL = config.apiUrl
 
 // Queues callbacks waiting for a refresh in progress
 let isRefreshing = false
