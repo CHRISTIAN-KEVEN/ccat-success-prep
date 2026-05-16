@@ -84,6 +84,28 @@ export interface ResponseSubmitResponse {
   intResponseTimeMs: number
 }
 
+export interface QuestionReviewResponse {
+  intDisplayOrder: number
+  lgQuestionId: number
+  strQuestionText: string
+  strImageUrl: string | null
+  strImageAlt: string | null
+  emContentType: string
+  emDifficulty: string
+  emQuestionType: string
+  strDomainCode: string
+  strExplanation: string | null
+  strHint: string | null
+  answers: AnswerResponse[]
+  lgChosenAnswerId: number | null
+  strChosenLabel: string | null
+  bIsCorrect: boolean
+  bWasSkipped: boolean
+  bWasChanged: boolean
+  intChangedCount: number
+  intResponseTimeMs: number
+}
+
 export const sessionService = {
   start: (emSessionType: string) =>
     api.post<TestSessionResponse>('/api/v1/sessions', { emSessionType }),
@@ -108,4 +130,7 @@ export const sessionService = {
 
   getMyHistory: () =>
     api.get<TestSessionResponse[]>('/api/v1/sessions/me'),
+
+  getReview: (sessionId: number) =>
+    api.get<QuestionReviewResponse[]>(`/api/v1/sessions/${sessionId}/review`),
 }

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { History, TrendingUp, Target, Clock, ChevronRight, RotateCcw, Filter, Loader2 } from 'lucide-react'
+import { History, TrendingUp, Target, Clock, ChevronRight, RotateCcw, Filter, Loader2, BookOpen } from 'lucide-react'
 import { sessionService, type TestSessionResponse } from '@/lib/sessionService'
 
 const statusColor: Record<string, string> = {
@@ -150,10 +150,18 @@ export default function HistoryPage() {
               </div>
             </div>
 
-            <button onClick={() => router.push('/dashboard/test')}
-              className="shrink-0 flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800 transition">
-              Retry <ChevronRight size={14} />
-            </button>
+            <div className="shrink-0 flex flex-col sm:flex-row items-end sm:items-center gap-2">
+              {session.emStatus === 'SUBMITTED' && (
+                <button onClick={() => router.push(`/dashboard/review/${session.lgId}`)}
+                  className="flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800 transition">
+                  <BookOpen size={13} /> Revue
+                </button>
+              )}
+              <button onClick={() => router.push('/dashboard/test')}
+                className="flex items-center gap-1 text-xs font-semibold text-gray-500 hover:text-gray-800 transition">
+                Retry <ChevronRight size={14} />
+              </button>
+            </div>
           </div>
         ))}
 

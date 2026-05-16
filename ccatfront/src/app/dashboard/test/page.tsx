@@ -1,8 +1,9 @@
 'use client'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronDown, Volume2, VolumeX, CheckCircle, RotateCcw, BarChart2, Lightbulb, Clock, Loader2 } from 'lucide-react'
+import { ChevronDown, Volume2, VolumeX, CheckCircle, RotateCcw, BarChart2, Lightbulb, Clock, Loader2, BookOpen, ThumbsUp, ThumbsDown, Lock, Zap, Trophy, Star, Infinity, Brain, TrendingUp } from 'lucide-react'
 import { sessionService, type QuestionResponse, type TestResultResponse } from '@/lib/sessionService'
+import { adviceService, type UserAdviceResponse } from '@/lib/adviceService'
 
 const TOTAL_TIME = 900
 
@@ -28,7 +29,9 @@ export default function TestPage() {
   const [openShortcut, setOpenShortcut] = useState<number | null>(0)
   const [done, setDone] = useState(false)
   const [result, setResult] = useState<TestResultResponse | null>(null)
-  const [submitting, setSubmitting] = useState(false)
+  const [advices, setAdvices] = useState<UserAdviceResponse[]>([])
+  const [submitting, setSubmitting]   = useState(false)
+  const [finishError, setFinishError] = useState('')
 
   const questionStartTime = useRef(Date.now())
 
@@ -70,7 +73,9 @@ export default function TestPage() {
       const res = await sessionService.finish(sessionId, timerExpired)
       setResult(res)
       setDone(true)
-    } catch {
+      adviceService.getBySession(sessionId).then(setAdvices).catch(() => {})
+    } catch (err) {
+      setFinishError((err as {message?: string})?.message ?? 'Erreur lors de la soumission du test')
       setDone(true)
     } finally {
       setSubmitting(false)
@@ -125,67 +130,268 @@ export default function TestPage() {
     </div>
   )
 
-  if (startError) return (
-    <div className="flex flex-col items-center justify-center h-full gap-4 p-6">
-      <p className="text-red-500 font-semibold text-center">{startError}</p>
-      <button onClick={() => router.push('/dashboard')}
-        className="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold">
-        Retour au dashboard
-      </button>
-    </div>
-  )
+  if (startError) {
+    const isPaywall = startError.toLowerCase().includes('already') || startError.toLowerCase().includes('upgrade') || startError.toLowerCase().includes('premium')
+    if (isPaywall) return (
+      <div className="h-full bg-white flex items-center justify-center p-4 relative overflow-hidden">
+
+        {/* Background glow orbs */}
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-100/60 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-100/60 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 w-full max-w-3xl flex gap-8 items-center">
+
+          {/* LEFT — Trophy + title + XP + back */}
+          <div className="flex flex-col items-center gap-4 flex-1 min-w-0">
+            {/* Trophy */}
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-xl shadow-orange-500/30">
+                <Trophy size={36} className="text-white" />
+              </div>
+              <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-green-500 border-2 border-white flex items-center justify-center">
+                <CheckCircle size={14} className="text-white" />
+              </div>
+            </div>
+            <div className="flex items-center gap-1">
+              {[1,2,3].map(i => <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" />)}
+            </div>
+
+            {/* Title */}
+            <div className="text-center">
+              <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">Test gratuit terminé</p>
+              <h1 className="text-2xl font-extrabold text-gray-900 leading-tight">
+                Tu as débloqué{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                  ton potentiel
+                </span>
+              </h1>
+              <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+                Passe à Premium pour continuer à t&apos;entraîner et décrocher ton score cible.
+              </p>
+            </div>
+
+            {/* XP earned */}
+            <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-200 px-3 py-2 rounded-xl w-full justify-center">
+              <Zap size={13} className="text-yellow-500 shrink-0" />
+              <p className="text-[11px] text-yellow-700 font-medium">Tu as gagné <strong>+80 XP</strong> avec ton test gratuit !</p>
+            </div>
+
+            {/* Back link */}
+            <button onClick={() => router.push('/dashboard')}
+              className="text-[11px] text-gray-400 hover:text-gray-600 transition-colors underline underline-offset-2">
+              Continuer sans upgrader
+            </button>
+          </div>
+
+          {/* RIGHT — Features + Pricing */}
+          <div className="flex flex-col gap-3 flex-1 min-w-0">
+
+            {/* Locked features — 2×2 grid */}
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { icon: Infinity,   label: 'Tests illimités',      desc: 'Autant que tu veux' },
+                { icon: Brain,      label: 'Explications IA',      desc: 'Comprends chaque erreur' },
+                { icon: TrendingUp, label: 'Progression',          desc: 'Courbes & domaines faibles' },
+                { icon: BookOpen,   label: "Plan d'étude",         desc: 'Programme 14 jours' },
+              ].map(({ icon: Icon, label, desc }) => (
+                <div key={label} className="flex items-center gap-2.5 bg-gray-50 border border-gray-200 rounded-xl p-3">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-blue-50 border border-blue-100">
+                    <Icon size={15} className="text-blue-500" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-gray-800 leading-tight">{label}</p>
+                    <p className="text-[10px] text-gray-400 leading-tight">{desc}</p>
+                  </div>
+                  <Lock size={11} className="text-gray-300 shrink-0" />
+                </div>
+              ))}
+            </div>
+
+            {/* Pricing cards */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Annual — highlighted */}
+              <div className="relative bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-4 border border-blue-500 shadow-lg shadow-blue-200">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-400 text-[9px] font-extrabold text-black px-2.5 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap">
+                  Meilleure offre
+                </div>
+                <p className="text-[9px] font-bold text-blue-200 uppercase tracking-wide mt-1">Annuel</p>
+                <p className="text-xl font-extrabold text-white mt-0.5">4,99€<span className="text-xs font-normal text-blue-200">/mois</span></p>
+                <p className="text-[10px] text-blue-200 mt-0.5">59,99€ / an · -50%</p>
+                <button className="mt-2.5 w-full bg-white text-blue-700 text-xs font-extrabold py-2 rounded-xl hover:bg-blue-50 transition-colors">
+                  Commencer →
+                </button>
+              </div>
+
+              {/* Monthly */}
+              <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wide mt-1">Mensuel</p>
+                <p className="text-xl font-extrabold text-gray-900 mt-0.5">9,99€<span className="text-xs font-normal text-gray-400">/mois</span></p>
+                <p className="text-[10px] text-gray-400 mt-0.5">Sans engagement</p>
+                <button className="mt-2.5 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold py-2 rounded-xl transition-colors border border-gray-200">
+                  Choisir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-4 p-6">
+        <p className="text-red-500 font-semibold text-center">{startError}</p>
+        <button onClick={() => router.push('/dashboard')}
+          className="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold">
+          Retour au dashboard
+        </button>
+      </div>
+    )
+  }
 
   // Results
   if (done && result) {
     const pct = Math.round((result.intTotalScore / result.intQuestionCount) * 100)
+    const isPass = result.bPassedThreshold
+
+    const handleFeedback = async (adviceId: number, helpful: boolean) => {
+      try {
+        const updated = await adviceService.submitFeedback(adviceId, helpful)
+        setAdvices(prev => prev.map(a => a.lgId === adviceId ? updated : a))
+      } catch { /* ignore */ }
+    }
+
     return (
-      <div className="flex flex-col items-center justify-center min-h-full p-6">
-        <div className="w-full max-w-lg bg-white border border-gray-200 rounded-2xl p-8">
-          <div className="flex flex-col items-center mb-8">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 ${pct >= 75 ? 'bg-green-100' : pct >= 50 ? 'bg-yellow-100' : 'bg-red-100'}`}>
-              <CheckCircle size={40} className={pct >= 75 ? 'text-green-600' : pct >= 50 ? 'text-yellow-600' : 'text-red-500'} />
+      <div className="min-h-full bg-gray-50 p-4 sm:p-6 flex flex-col items-center">
+        <div className="w-full max-w-2xl flex flex-col gap-4">
+
+          {/* Score card */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8">
+            <div className="flex flex-col items-center mb-6">
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${isPass ? 'bg-green-100' : pct >= 50 ? 'bg-yellow-100' : 'bg-red-100'}`}>
+                <CheckCircle size={32} className={isPass ? 'text-green-600' : pct >= 50 ? 'text-yellow-500' : 'text-red-500'} />
+              </div>
+              <h1 className="text-2xl font-bold text-gray-900">Test terminé</h1>
+              <p className="text-sm text-gray-400 mt-0.5">Voici vos résultats</p>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Test Complete</h1>
-            <p className="text-gray-500 text-sm mt-1">Here&apos;s how you performed</p>
+
+            <div className="bg-gray-50 rounded-2xl p-5 text-center mb-5">
+              <p className="text-5xl font-extrabold text-blue-600">
+                {result.intTotalScore}
+                <span className="text-2xl text-gray-300 font-normal">/{result.intQuestionCount}</span>
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                {pct}% correct · ~{result.intPercentileEstimate}e percentile · {result.emPaceRating}
+              </p>
+              <span className={`inline-block mt-2 text-xs font-semibold px-3 py-1 rounded-full ${isPass ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+                {isPass ? '✓ Seuil atteint' : '✗ Seuil non atteint (24/50)'}
+              </span>
+            </div>
+
+            {result.domainPerformances.length > 0 && (
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                {result.domainPerformances.map(dp => (
+                  <div key={dp.strDomainCode} className="border border-gray-100 rounded-xl p-3 text-center">
+                    <p className="text-lg font-bold text-gray-900">{dp.intCorrectCount}/{dp.intTotalCount}</p>
+                    <p className="text-[11px] text-gray-400 mt-0.5">{dp.strDomainLabel || dp.strDomainCode}</p>
+                    <div className="h-1 bg-gray-100 rounded-full mt-2 overflow-hidden">
+                      <div className="h-full bg-blue-500 rounded-full" style={{ width: `${dp.dbAccuracyPercent}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              <button onClick={() => window.location.reload()}
+                className="flex-1 flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
+                <RotateCcw size={14} /> Refaire
+              </button>
+              <button onClick={() => router.push(`/dashboard/review/${sessionId}`)}
+                className="flex-1 flex items-center justify-center gap-2 border border-blue-200 bg-blue-50 text-blue-700 rounded-xl py-3 text-sm font-semibold hover:bg-blue-100 transition">
+                <BookOpen size={14} /> Voir la revue
+              </button>
+              <button onClick={() => router.push('/dashboard')}
+                className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-sm font-semibold transition">
+                <BarChart2 size={14} /> Dashboard
+              </button>
+            </div>
           </div>
-          <div className="bg-gray-50 rounded-2xl p-6 mb-4 text-center">
-            <p className="text-5xl font-extrabold text-blue-600">
-              {result.intTotalScore}<span className="text-2xl text-gray-400">/{result.intQuestionCount}</span>
-            </p>
-            <p className="text-gray-500 text-sm mt-1">
-              {pct}% correct · ~{result.intPercentileEstimate}th percentile · {result.emPaceRating}
-            </p>
-          </div>
-          {result.domainPerformances.length > 0 && (
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              {result.domainPerformances.map(dp => (
-                <div key={dp.strDomainCode} className="bg-white border border-gray-200 rounded-xl p-3 text-center">
-                  <p className="text-lg font-bold text-gray-900">{dp.intCorrectCount}/{dp.intTotalCount}</p>
-                  <p className="text-[11px] text-gray-500 leading-tight mt-0.5">{dp.strDomainCode}</p>
+
+          {/* Advice cards */}
+          {advices.length > 0 && (
+            <div className="flex flex-col gap-3">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide px-1">
+                Conseils personnalisés ({advices.length})
+              </p>
+              {advices.map(advice => (
+                <div key={advice.lgId} className="bg-white border border-gray-200 rounded-2xl p-5">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        advice.adviceCard.emPriority === 'CRITICAL' ? 'bg-red-100 text-red-600' :
+                        advice.adviceCard.emPriority === 'HIGH'     ? 'bg-orange-100 text-orange-600' :
+                        advice.adviceCard.emPriority === 'MEDIUM'   ? 'bg-blue-100 text-blue-600' :
+                                                                       'bg-gray-100 text-gray-500'
+                      }`}>
+                        {advice.adviceCard.emPriority}
+                      </span>
+                      <span className="text-[10px] text-gray-400 font-medium">{advice.adviceCard.emCategory}</span>
+                    </div>
+                    {advice.bWasHelpful === null && (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button onClick={() => handleFeedback(advice.lgId, true)}
+                          className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-green-600 transition">
+                          <ThumbsUp size={13} /> Utile
+                        </button>
+                        <button onClick={() => handleFeedback(advice.lgId, false)}
+                          className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-red-500 transition">
+                          <ThumbsDown size={13} />
+                        </button>
+                      </div>
+                    )}
+                    {advice.bWasHelpful !== null && (
+                      <span className="text-[11px] text-gray-400">
+                        {advice.bWasHelpful ? '👍 Utile' : '👎 Pas utile'}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-sm font-bold text-gray-900 mb-1">{advice.adviceCard.strTitle}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{advice.adviceCard.strContent}</p>
+                  {advice.adviceCard.strActionLabel && advice.adviceCard.strActionUrl && (
+                    <a href={advice.adviceCard.strActionUrl}
+                      className="inline-block mt-3 text-xs font-semibold text-blue-600 hover:underline">
+                      {advice.adviceCard.strActionLabel} →
+                    </a>
+                  )}
                 </div>
               ))}
             </div>
           )}
-          <div className="flex gap-3">
-            <button onClick={() => window.location.reload()}
-              className="flex-1 flex items-center justify-center gap-2 border border-gray-300 rounded-xl py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
-              <RotateCcw size={15} /> Retake
-            </button>
-            <button onClick={() => router.push('/dashboard')}
-              className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-sm font-semibold transition">
-              <BarChart2 size={15} /> View Analytics
-            </button>
-          </div>
         </div>
       </div>
     )
   }
 
-  if (done || !q) return (
-    <div className="flex items-center justify-center h-full">
-      <Loader2 size={24} className="animate-spin text-blue-600" />
+  if (done && !result) return (
+    <div className="flex flex-col items-center justify-center h-full gap-4 p-8 text-center">
+      {finishError ? (
+        <>
+          <p className="text-red-500 font-semibold">{finishError}</p>
+          <button onClick={() => sessionId && sessionService.getResult(sessionId).then(r => { setResult(r); setFinishError('') }).catch(() => {})}
+            className="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold">
+            Récupérer les résultats
+          </button>
+          <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-400 hover:underline">
+            Retour au dashboard
+          </button>
+        </>
+      ) : (
+        <Loader2 size={24} className="animate-spin text-blue-600" />
+      )}
     </div>
   )
+
+  if (!q) return null
 
   const letters = ['A', 'B', 'C', 'D']
 

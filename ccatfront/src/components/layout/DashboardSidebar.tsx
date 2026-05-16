@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  BarChart2, BookOpen, ClipboardList, History,
+  BarChart2, Bookmark, BookOpen, ClipboardList, History,
   LayoutDashboard, Menu, Settings, X, Zap,
 } from 'lucide-react'
 import { useState } from 'react'
@@ -14,6 +14,7 @@ const navItems = [
   { label: 'Study Plan', icon: BookOpen, href: '/dashboard/study' },
   { label: 'Domain Analysis', icon: BarChart2, href: '/dashboard/analysis' },
   { label: 'Test History', icon: History, href: '/dashboard/history' },
+  { label: 'Bookmarks', icon: Bookmark, href: '/dashboard/bookmarks' },
   { label: 'Settings', icon: Settings, href: '/dashboard/settings' },
 ]
 
@@ -34,7 +35,9 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
       {/* Nav links */}
       <nav className="flex flex-col gap-1 flex-1">
         {navItems.map(({ label, icon: Icon, href }) => {
-          const active = href === '/dashboard' ? pathname === href : pathname.startsWith(href)
+          const active = href === '/dashboard'
+          ? pathname === href
+          : pathname.startsWith(href) || (href === '/dashboard/history' && pathname.startsWith('/dashboard/review'))
           return (
             <Link
               key={href}
