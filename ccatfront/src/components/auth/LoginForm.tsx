@@ -32,12 +32,12 @@ export default function LoginForm({ onNavigate, onSubmit }: Props) {
         saveSession(res)
         onSubmit(res.user.emRole)
       } catch (err: unknown) {
-        setError((err as { message?: string })?.message ?? 'Google login échoué')
+        setError((err as { message?: string })?.message ?? 'Google login failed')
       } finally {
         setLoading(false)
       }
     },
-    onError: () => setError('Google login échoué'),
+    onError: () => setError('Google login failed'),
     scope: 'openid email profile',
   })
 
@@ -50,7 +50,7 @@ export default function LoginForm({ onNavigate, onSubmit }: Props) {
       saveSession(res)
       onSubmit(res.user.emRole)
     } catch (err: unknown) {
-      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Identifiants incorrects'
+      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Invalid credentials'
       setError(String(msg))
     } finally {
       setLoading(false)

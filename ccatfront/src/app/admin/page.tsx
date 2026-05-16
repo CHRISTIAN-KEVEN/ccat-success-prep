@@ -25,10 +25,10 @@ export default function AdminDashboardPage() {
   const totalQuestions = domains.reduce((a, d) => a + (d.intQuestionCount ?? 0), 0)
 
   const stats = [
-    { label: 'DOMAINES ACTIFS', value: active.length, icon: BookOpen, color: 'text-blue-600 bg-blue-50', border: 'border-blue-100' },
-    { label: 'TOTAL DOMAINES', value: domains.length, icon: Activity, color: 'text-gray-600 bg-gray-100', border: 'border-gray-200' },
+    { label: 'ACTIVE DOMAINS', value: active.length, icon: BookOpen, color: 'text-blue-600 bg-blue-50', border: 'border-blue-100' },
+    { label: 'TOTAL DOMAINS', value: domains.length, icon: Activity, color: 'text-gray-600 bg-gray-100', border: 'border-gray-200' },
     { label: 'TOTAL QUESTIONS', value: totalQuestions, icon: HelpCircle, color: 'text-purple-600 bg-purple-50', border: 'border-purple-100' },
-    { label: 'TAUX ACTIF', value: domains.length ? `${Math.round((active.length / domains.length) * 100)}%` : '—', icon: TrendingUp, color: 'text-green-600 bg-green-50', border: 'border-green-100' },
+    { label: 'ACTIVE RATE', value: domains.length ? `${Math.round((active.length / domains.length) * 100)}%` : '—', icon: TrendingUp, color: 'text-green-600 bg-green-50', border: 'border-green-100' },
   ]
 
   const columns: Column<DomainWithAll>[] = [
@@ -42,7 +42,7 @@ export default function AdminDashboardPage() {
     },
     { key: 'intQuestionCount', header: 'Questions', sortable: true, render: d => <span className="text-gray-600">{d.intQuestionCount ?? 0}</span> },
     {
-      key: 'emStatus', header: 'Statut',
+      key: 'emStatus', header: 'Status',
       render: d => (
         <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${d.emStatus === 'ACTIVE' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
           {d.emStatus}
@@ -62,7 +62,7 @@ export default function AdminDashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Vue d'ensemble de la banque de questions.</p>
+          <p className="text-sm text-gray-500 mt-0.5">Overview of the question bank.</p>
         </div>
       </div>
 
@@ -82,14 +82,14 @@ export default function AdminDashboardPage() {
 
       <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-gray-900">Tous les domaines</h2>
-          <Link href="/admin/domains" className="text-xs text-blue-600 hover:underline font-medium">Gérer →</Link>
+          <h2 className="text-sm font-semibold text-gray-900">All Domains</h2>
+          <Link href="/admin/domains" className="text-xs text-blue-600 hover:underline font-medium">Manage →</Link>
         </div>
         <DataTable
           data={domains}
           columns={columns}
           searchable={false}
-          emptyMessage="Aucun domaine."
+          emptyMessage="No domains."
         />
       </div>
     </div>

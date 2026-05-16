@@ -1,74 +1,119 @@
-# CCAT Pro — Frontend
+# CCAT Pro Frontend
 
-Web application for CCAT (Criteria Cognitive Aptitude Test) preparation. Built with Next.js 15, Tailwind CSS v4, and TypeScript.
+Frontend for the CCAT preparation platform. Built with Next.js, React, TypeScript, and Tailwind CSS.
 
 ## Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Styling**: Tailwind CSS v4 with CSS custom properties
-- **Language**: TypeScript
-- **Icons**: lucide-react
-- **Font**: Geist (via next/font)
+- `next` 16
+- `react` 19
+- `typescript`
+- `tailwindcss` 4
+- `lucide-react`
+- `framer-motion`
+- `@react-oauth/google`
+- `@tiptap/*`
 
-## Pages
+## Features
+
+- Marketing homepage
+- Login, registration, email verification, forgot/reset password
+- User dashboard with analytics, history, bookmarks, settings, and study plan
+- Timed CCAT test flow
+- Test review screen
+- Admin area for domains, questions, and admin settings
+
+## Routes
 
 | Route | Description |
 |---|---|
-| `/` | Homepage — hero, features, pricing, testimonials, FAQ |
-| `/login` | Login / Create Account (tab switcher) |
-| `/dashboard` | Performance Analytics — stats, progression chart, domain breakdown |
-| `/dashboard/test` | Full-screen CCAT test simulation — 8 questions, 15-min timer |
-| `/dashboard/history` | Test History — past sessions with scores and category breakdown |
-| `/dashboard/settings` | Profile Settings — editable user form |
+| `/` | Marketing homepage |
+| `/login` | Authentication flow |
+| `/dashboard` | User dashboard |
+| `/dashboard/test` | Timed test session |
+| `/dashboard/review/[sessionId]` | Review a submitted session |
+| `/dashboard/history` | Session history |
+| `/dashboard/bookmarks` | Saved questions |
+| `/dashboard/study` | Study plan |
+| `/dashboard/settings` | User profile and password settings |
+| `/admin` | Admin dashboard |
+| `/admin/domains` | Domain management |
+| `/admin/questions` | Question management |
+| `/admin/settings` | Admin account overview |
 
 ## Project Structure
 
-```
+```text
 src/
 ├── app/
+│   ├── admin/
 │   ├── dashboard/
-│   │   ├── history/page.tsx
-│   │   ├── settings/page.tsx
-│   │   ├── test/page.tsx
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── login/page.tsx
-│   ├── globals.css
+│   ├── login/
 │   ├── layout.tsx
-│   └── page.tsx
+│   ├── page.tsx
+│   └── globals.css
 ├── components/
+│   ├── auth/
 │   ├── layout/
-│   │   ├── DashboardNav.tsx
-│   │   ├── DashboardSidebar.tsx
-│   │   └── Navbar.tsx
 │   └── ui/
-│       ├── Button.tsx
-│       └── PricingCard.tsx
 ├── context/
-│   └── I18nContext.tsx
-└── data/
-    ├── mockDashboard.ts
-    ├── mockQuestions.ts
-    └── locales/
-        ├── en.json
-        └── fr.json
+├── data/
+└── lib/
 ```
 
 ## Getting Started
 
+1. Install dependencies:
+
 ```bash
 npm install
+```
+
+2. Create your env file:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Start the dev server:
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open `http://localhost:3000`.
 
-## i18n
+## Environment Variables
 
-English / French language switching built with React Context (no external library). Toggle available in the homepage navbar.
+The project currently expects these variables:
 
-## Dashboard Layout
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+```
 
-Fixed layout: header + sidebar are static, only the main content area scrolls (`overflow-y-auto`).
+Use [`.env.example`](./.env.example) as the base template.
 
-The test page (`/dashboard/test`) uses `fixed inset-0 z-50` to cover the full screen during a session.
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
+
+## Deployment
+
+Before deploying:
+
+1. Set the production value for `NEXT_PUBLIC_API_URL`.
+2. Set the production Google OAuth client in `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
+3. Run `npm run build` to validate the production build.
+
+For Vercel or similar platforms, add the same variables from `.env.example` in the project environment settings.
+
+## Notes
+
+- `.env.local` is ignored and should not be committed.
+- `.env.example` is committed to document required variables.
+- The app includes both English and French locale files, but the frontend now defaults to English.

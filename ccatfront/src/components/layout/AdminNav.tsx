@@ -48,7 +48,7 @@ export default function AdminNav() {
         <div className="flex items-center gap-2 pl-2 sm:pl-3 border-l border-gray-200">
           <div className="text-right hidden sm:block">
             <p className="text-xs font-semibold text-gray-900 leading-tight">{fullName}</p>
-            <p className="text-[10px] text-orange-500 font-medium">ADMINISTRATEUR</p>
+            <p className="text-[10px] text-orange-500 font-medium">ADMINISTRATOR</p>
           </div>
 
           <div className="relative" ref={ref}>
@@ -68,17 +68,17 @@ export default function AdminNav() {
                 <div className="py-1">
                   <button onClick={() => { setOpen(false); router.push('/admin/settings') }}
                     className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <User size={15} className="text-gray-400" /> Profil
+                    <User size={15} className="text-gray-400" /> Profile
                   </button>
                   <button onClick={() => { setOpen(false); router.push('/admin/settings') }}
                     className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Settings size={15} className="text-gray-400" /> Paramètres
+                    <Settings size={15} className="text-gray-400" /> Settings
                   </button>
                 </div>
                 <div className="border-t border-gray-100 py-1">
                   <button onClick={handleLogout}
                     className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                    <LogOut size={15} /> Déconnexion
+                    <LogOut size={15} /> Sign Out
                   </button>
                 </div>
               </div>

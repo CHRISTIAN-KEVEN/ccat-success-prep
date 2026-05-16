@@ -7,7 +7,7 @@ import { sessionService, type TestSessionResponse, type TestResultResponse } fro
 import { domainService, type DomainResponse } from '@/lib/domainService'
 
 function LineChart({ data }: { data: { label: string; score: number }[] }) {
-  if (data.length < 2) return <p className="text-xs text-gray-400 py-8 text-center">Pas encore assez de sessions.</p>
+  if (data.length < 2) return <p className="text-xs text-gray-400 py-8 text-center">Not enough sessions yet.</p>
   const scores = data.map(d => d.score)
   const min = Math.min(...scores) - 5
   const max = Math.max(...scores) + 3
@@ -68,10 +68,10 @@ export default function DashboardPage() {
   const latestPercentile = results.length ? results[0].intPercentileEstimate : 0
 
   const stats = [
-    { label: 'PERCENTILE RANK', value: submitted.length ? `${latestPercentile}th` : '—', sub: 'Dernière session', change: null, up: null },
-    { label: 'MEILLEUR SCORE', value: submitted.length ? `${bestScore}/50` : '—', sub: `${submitted.length} session(s) complétée(s)`, change: null, up: null },
-    { label: 'SCORE MOYEN', value: submitted.length ? `${avgScore}/50` : '—', sub: 'Sur toutes les sessions', change: null, up: null },
-    { label: 'PRÉCISION MOY.', value: submitted.length ? `${avgAccuracy}%` : '—', sub: 'Bonnes réponses / tentées', change: null, up: null },
+    { label: 'PERCENTILE RANK', value: submitted.length ? `${latestPercentile}th` : '—', sub: 'Latest session', change: null, up: null },
+    { label: 'BEST SCORE', value: submitted.length ? `${bestScore}/50` : '—', sub: `${submitted.length} completed session(s)`, change: null, up: null },
+    { label: 'AVERAGE SCORE', value: submitted.length ? `${avgScore}/50` : '—', sub: 'Across all sessions', change: null, up: null },
+    { label: 'AVG. ACCURACY', value: submitted.length ? `${avgAccuracy}%` : '—', sub: 'Correct answers / attempted', change: null, up: null },
   ]
 
   // Score progression (last 6 submitted)
@@ -96,13 +96,13 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-            Bonjour, {user?.strFirstName} 👋
+            Hello, {user?.strFirstName} 👋
           </h1>
-          <p className="text-sm text-gray-500 mt-0.5">Voici votre progression sur les 30 derniers jours.</p>
+          <p className="text-sm text-gray-500 mt-0.5">Here is your progress over the last 30 days.</p>
         </div>
         <Link href="/dashboard/test">
           <button className="flex items-center gap-1.5 text-sm font-semibold text-white bg-blue-600 rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors">
-            <PlayCircle size={14} /> Démarrer un test
+            <PlayCircle size={14} /> Start a test
           </button>
         </Link>
       </div>
@@ -130,8 +130,8 @@ export default function DashboardPage() {
 
           {/* Score Progression */}
           <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <h2 className="text-sm font-semibold text-gray-900 mb-1">Progression des scores</h2>
-            <p className="text-xs text-gray-400 mb-4">Évolution de votre score sur les dernières sessions.</p>
+            <h2 className="text-sm font-semibold text-gray-900 mb-1">Score Progression</h2>
+            <p className="text-xs text-gray-400 mb-4">How your score has changed across recent sessions.</p>
             {progression.length >= 2 ? (
               <div className="flex gap-4 items-start">
                 <div className="flex flex-col justify-between text-[10px] text-gray-300 h-28 sm:h-32 pb-1 shrink-0">
@@ -141,7 +141,7 @@ export default function DashboardPage() {
               </div>
             ) : (
               <div className="py-10 text-center text-sm text-gray-400">
-                Complétez au moins 2 tests pour voir votre progression.
+                Complete at least 2 tests to see your progress.
               </div>
             )}
           </div>
@@ -149,7 +149,7 @@ export default function DashboardPage() {
           {/* Domain Proficiency */}
           <div className="bg-white border border-gray-200 rounded-xl p-5">
             <h2 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <span>↗</span> Performance par domaine
+              <span>↗</span> Domain Performance
             </h2>
             {domainPerfs.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -158,35 +158,35 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-semibold text-gray-800">{dp.strDomainLabel || dp.strDomainCode}</p>
                       {dp.dbAccuracyPercent < 60 && (
-                        <span className="text-[10px] font-semibold bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">À travailler</span>
+                        <span className="text-[10px] font-semibold bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">Needs work</span>
                       )}
                     </div>
                     <div>
                       <div className="flex justify-between text-xs text-gray-400 mb-1">
-                        <span>PRÉCISION</span><span>{Math.round(dp.dbAccuracyPercent)}%</span>
+                        <span>ACCURACY</span><span>{Math.round(dp.dbAccuracyPercent)}%</span>
                       </div>
                       <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                         <div className="h-full bg-blue-500 rounded-full" style={{ width: dp.dbAccuracyPercent + '%' }} />
                       </div>
                     </div>
-                    <p className="text-xs text-gray-500">{dp.intCorrectCount}/{dp.intTotalCount} correctes</p>
+                    <p className="text-xs text-gray-500">{dp.intCorrectCount}/{dp.intTotalCount} correct</p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-400 py-4 text-center">Complétez un test pour voir vos performances par domaine.</p>
+              <p className="text-sm text-gray-400 py-4 text-center">Complete a test to see your domain performance.</p>
             )}
           </div>
 
           {/* Domains available */}
           {domains.length > 0 && (
             <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h2 className="text-sm font-semibold text-gray-900 mb-4">Domaines disponibles</h2>
+              <h2 className="text-sm font-semibold text-gray-900 mb-4">Available Domains</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm min-w-[400px]">
                   <thead>
                     <tr className="text-[11px] text-gray-400 border-b border-gray-100">
-                      {['Domaine', 'Questions', 'Ratio par défaut'].map(h => (
+                      {['Domain', 'Questions', 'Default Ratio'].map(h => (
                         <th key={h} className="text-left font-medium pb-2 pr-4">{h}</th>
                       ))}
                     </tr>
@@ -211,12 +211,12 @@ export default function DashboardPage() {
 
           {/* Session summary */}
           <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <p className="text-[10px] font-semibold text-gray-400 tracking-widest mb-3">RÉSUMÉ</p>
+            <p className="text-[10px] font-semibold text-gray-400 tracking-widest mb-3">SUMMARY</p>
             {[
               { label: 'Total sessions', value: sessions.length },
-              { label: 'Complétées', value: submitted.length },
-              { label: 'En cours', value: sessions.filter(s => s.emStatus === 'ACTIVE').length },
-              { label: 'Expirées', value: sessions.filter(s => s.emStatus === 'EXPIRED').length },
+              { label: 'Completed', value: submitted.length },
+              { label: 'In Progress', value: sessions.filter(s => s.emStatus === 'ACTIVE').length },
+              { label: 'Expired', value: sessions.filter(s => s.emStatus === 'EXPIRED').length },
             ].map(item => (
               <div key={item.label} className="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0">
                 <span className="text-sm text-gray-700">{item.label}</span>
@@ -227,11 +227,11 @@ export default function DashboardPage() {
 
           {/* Quick actions */}
           <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <p className="text-[10px] font-semibold text-gray-400 tracking-widest mb-3">ACTIONS RAPIDES</p>
+            <p className="text-[10px] font-semibold text-gray-400 tracking-widest mb-3">QUICK ACTIONS</p>
             {[
-              { label: 'Voir l\'historique', href: '/dashboard/history' },
-              { label: 'Plan d\'étude', href: '/dashboard/study' },
-              { label: 'Paramètres', href: '/dashboard/settings' },
+              { label: 'View History', href: '/dashboard/history' },
+              { label: 'Study Plan', href: '/dashboard/study' },
+              { label: 'Settings', href: '/dashboard/settings' },
             ].map(a => (
               <Link key={a.label} href={a.href}
                 className="w-full flex items-center justify-between text-sm text-gray-700 hover:text-gray-900 py-2.5 border-b border-gray-50 last:border-0 hover:bg-gray-50 -mx-1 px-1 rounded transition-colors">
@@ -243,17 +243,17 @@ export default function DashboardPage() {
           {/* Latest result detail */}
           {latestResult && (
             <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <p className="text-[10px] font-semibold text-gray-400 tracking-widest mb-3">DERNIER TEST</p>
+              <p className="text-[10px] font-semibold text-gray-400 tracking-widest mb-3">LATEST TEST</p>
               {[
                 { label: 'Score', value: `${latestResult.intTotalScore}/${latestResult.intQuestionCount}` },
-                { label: 'Précision', value: `${Math.round(latestResult.dbAccuracyPercent)}%` },
-                { label: 'Complété', value: `${Math.round(latestResult.dbCompletionPercent)}%` },
-                { label: 'Seuil réussi', value: latestResult.bPassedThreshold ? '✓ Oui' : '✗ Non' },
-                { label: 'Rythme', value: latestResult.emPaceRating },
+                { label: 'Accuracy', value: `${Math.round(latestResult.dbAccuracyPercent)}%` },
+                { label: 'Completed', value: `${Math.round(latestResult.dbCompletionPercent)}%` },
+                { label: 'Passed Threshold', value: latestResult.bPassedThreshold ? '✓ Yes' : '✗ No' },
+                { label: 'Pace', value: latestResult.emPaceRating },
               ].map(item => (
                 <div key={item.label} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
                   <span className="text-xs text-gray-500">{item.label}</span>
-                  <span className={`text-xs font-bold ${item.label === 'Seuil réussi' ? (latestResult.bPassedThreshold ? 'text-green-600' : 'text-red-500') : 'text-gray-900'}`}>
+                  <span className={`text-xs font-bold ${item.label === 'Passed Threshold' ? (latestResult.bPassedThreshold ? 'text-green-600' : 'text-red-500') : 'text-gray-900'}`}>
                     {item.value}
                   </span>
                 </div>

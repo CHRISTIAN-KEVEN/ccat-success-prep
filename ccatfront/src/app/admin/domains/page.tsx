@@ -64,7 +64,7 @@ export default function AdminDomainsPage() {
       setShowForm(false)
       load()
     } catch (err: unknown) {
-      setError(err && typeof err === 'object' && 'message' in err ? String((err as { message: string }).message) : 'Erreur')
+      setError(err && typeof err === 'object' && 'message' in err ? String((err as { message: string }).message) : 'An error occurred')
     } finally {
       setSaving(false)
     }
@@ -79,7 +79,7 @@ export default function AdminDomainsPage() {
   }
 
   const handleDelete = async (code: string) => {
-    if (!confirm(`Désactiver le domaine ${code} ?`)) return
+    if (!confirm(`Disable domain ${code}?`)) return
     await api.delete(`/api/v1/domains/${code}`)
     load()
   }
@@ -95,9 +95,9 @@ export default function AdminDomainsPage() {
     },
     { key: 'intQuestionCount', header: 'Questions', sortable: true, render: d => <span className="text-gray-600">{d.intQuestionCount ?? 0}</span> },
     { key: 'intDefaultRatio', header: 'Ratio', sortable: true, render: d => <span className="text-gray-600">{d.intDefaultRatio}%</span> },
-    { key: 'intSortOrder', header: 'Ordre', sortable: true, render: d => <span className="text-gray-600">{d.intSortOrder}</span> },
+    { key: 'intSortOrder', header: 'Order', sortable: true, render: d => <span className="text-gray-600">{d.intSortOrder}</span> },
     {
-      key: 'emStatus', header: 'Statut',
+      key: 'emStatus', header: 'Status',
       render: d => (
         <button
           onClick={() => handleToggle(d)}
@@ -128,12 +128,12 @@ export default function AdminDomainsPage() {
     <div className="p-4 sm:p-6 max-w-6xl mx-auto w-full">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Domaines</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Gérez les catégories de la banque de questions.</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Domains</h1>
+          <p className="text-sm text-gray-500 mt-0.5">Manage question bank categories.</p>
         </div>
         <button onClick={openCreate}
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
-          <Plus size={15} /> Nouveau domaine
+          <Plus size={15} /> New Domain
         </button>
       </div>
 
@@ -142,7 +142,7 @@ export default function AdminDomainsPage() {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100">
-              <h2 className="text-lg font-bold text-gray-900">{editing ? 'Modifier le domaine' : 'Nouveau domaine'}</h2>
+              <h2 className="text-lg font-bold text-gray-900">{editing ? 'Edit Domain' : 'New Domain'}</h2>
               <button onClick={() => setShowForm(false)} className="w-8 h-8 flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                 <X size={16} />
               </button>
@@ -172,13 +172,13 @@ export default function AdminDomainsPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col gap-1.5">
-                    <label className={labelCls}>Ratio par défaut (%)</label>
+                  <label className={labelCls}>Default Ratio (%)</label>
                     <input type="number" min={0} max={100} value={form.intDefaultRatio}
                       onChange={e => setForm(f => ({ ...f, intDefaultRatio: +e.target.value }))}
                       className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className={labelCls}>Ordre d'affichage</label>
+                    <label className={labelCls}>Display Order</label>
                     <input type="number" value={form.intSortOrder}
                       onChange={e => setForm(f => ({ ...f, intSortOrder: +e.target.value }))}
                       className={inputCls} />
@@ -187,11 +187,11 @@ export default function AdminDomainsPage() {
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowForm(false)}
                     className="flex-1 border border-gray-200 rounded-xl py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                    Annuler
+                    Cancel
                   </button>
                   <button type="submit" disabled={saving}
                     className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded-xl py-2.5 text-sm font-semibold flex items-center justify-center gap-2 transition-colors">
-                    {saving ? <Loader2 size={15} className="animate-spin" /> : <><Check size={15} /> Enregistrer</>}
+                    {saving ? <Loader2 size={15} className="animate-spin" /> : <><Check size={15} /> Save</>}
                   </button>
                 </div>
               </form>
@@ -206,8 +206,8 @@ export default function AdminDomainsPage() {
         <DataTable
           data={domains}
           columns={columns}
-          searchPlaceholder="Rechercher un domaine…"
-          emptyMessage="Aucun domaine."
+          searchPlaceholder="Search a domain..."
+          emptyMessage="No domains."
         />
       )}
     </div>

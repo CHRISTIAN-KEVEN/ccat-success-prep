@@ -20,7 +20,7 @@ const scoreColor = (pct: number) =>
   pct >= 80 ? 'text-green-600' : pct >= 60 ? 'text-yellow-600' : 'text-red-500'
 
 function formatDate(dt: string) {
-  return new Date(dt).toLocaleString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+  return new Date(dt).toLocaleString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 }
 
 function formatDuration(session: TestSessionResponse) {
@@ -154,7 +154,7 @@ export default function HistoryPage() {
               {session.emStatus === 'SUBMITTED' && (
                 <button onClick={() => router.push(`/dashboard/review/${session.lgId}`)}
                   className="flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800 transition">
-                  <BookOpen size={13} /> Revue
+                  <BookOpen size={13} /> Review
                 </button>
               )}
               <button onClick={() => router.push('/dashboard/test')}
@@ -167,7 +167,7 @@ export default function HistoryPage() {
 
         {filtered.length === 0 && (
           <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center text-gray-400 text-sm">
-            Aucune session trouvée.
+            No sessions found.
           </div>
         )}
       </div>

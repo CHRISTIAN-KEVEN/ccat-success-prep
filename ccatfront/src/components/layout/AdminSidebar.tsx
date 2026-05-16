@@ -6,9 +6,9 @@ import { useState } from 'react'
 
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/admin', exact: true },
-  { label: 'Domaines', icon: BookOpen, href: '/admin/domains' },
+  { label: 'Domains', icon: BookOpen, href: '/admin/domains' },
   { label: 'Questions', icon: HelpCircle, href: '/admin/questions' },
-  { label: 'Paramètres', icon: Settings, href: '/admin/settings' },
+  { label: 'Settings', icon: Settings, href: '/admin/settings' },
 ]
 
 function SidebarContent({ onClose }: { onClose?: () => void }) {
@@ -51,7 +51,7 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
           <p className="text-sm font-semibold text-orange-700">Admin Panel</p>
         </div>
         <p className="text-xs text-orange-600 leading-relaxed">
-          Accès complet à la gestion des <strong>domaines</strong> et <strong>questions</strong>.
+          Full access to manage <strong>domains</strong> and <strong>questions</strong>.
         </p>
       </div>
     </div>

@@ -14,7 +14,7 @@ export default function AdminSettingsPage() {
       <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-7">
         <div className="flex items-center gap-3 mb-6 pb-5 border-b border-gray-100">
           <User size={20} className="text-gray-400" />
-          <h1 className="text-xl font-bold text-gray-900">Compte administrateur</h1>
+          <h1 className="text-xl font-bold text-gray-900">Administrator Account</h1>
         </div>
 
         <div className="flex items-center gap-4 mb-7">
@@ -30,19 +30,19 @@ export default function AdminSettingsPage() {
 
         <div className="flex flex-col gap-0 divide-y divide-gray-50">
           {[
-            { label: 'Prénom', value: user?.strFirstName },
-            { label: 'Nom', value: user?.strLastName },
+            { label: 'First Name', value: user?.strFirstName },
+            { label: 'Last Name', value: user?.strLastName },
             { label: 'Email', value: user?.strEmail },
-            { label: 'Statut', value: user?.emStatus },
+            { label: 'Status', value: user?.emStatus },
             {
-              label: 'Email vérifié',
+              label: 'Email Verified',
               value: user?.bEmailVerified ? (
                 <span className="flex items-center gap-1.5 text-green-600 font-medium text-sm">
-                  <CheckCircle2 size={14} /> Vérifié
+                  <CheckCircle2 size={14} /> Verified
                 </span>
               ) : (
                 <span className="flex items-center gap-1.5 text-red-500 font-medium text-sm">
-                  <XCircle size={14} /> Non vérifié
+                  <XCircle size={14} /> Not Verified
                 </span>
               ),
             },
@@ -62,16 +62,16 @@ export default function AdminSettingsPage() {
       <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-7">
         <div className="flex items-center gap-3 mb-5 pb-5 border-b border-gray-100">
           <Shield size={20} className="text-blue-600" />
-          <h2 className="text-xl font-bold text-gray-900">Rôle et permissions</h2>
+          <h2 className="text-xl font-bold text-gray-900">Role and Permissions</h2>
         </div>
         <div className="flex items-start gap-4">
           <span className="text-xs font-bold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full shrink-0 mt-0.5">ADMIN</span>
           <div className="flex flex-col gap-2">
             {[
-              'Gestion des domaines (CRUD)',
-              'Gestion des questions (CRUD, import bulk)',
-              'Consultation de toutes les sessions',
-              'Accès complet au panneau d\'administration',
+              'Domain management (CRUD)',
+              'Question management (CRUD, bulk import)',
+              'Access to all sessions',
+              'Full access to the admin panel',
             ].map(perm => (
               <div key={perm} className="flex items-center gap-2 text-sm text-gray-700">
                 <CheckCircle2 size={14} className="text-green-500 shrink-0" />

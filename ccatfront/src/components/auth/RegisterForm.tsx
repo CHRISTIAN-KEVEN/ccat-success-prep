@@ -30,7 +30,7 @@ export default function RegisterForm({ onNavigate, onSubmit }: Props) {
       await authService.register(email, password, firstName, lastName)
       onSubmit(email)
     } catch (err: unknown) {
-      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Erreur lors de la création du compte'
+      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Failed to create account'
       setError(String(msg))
     } finally {
       setLoading(false)

@@ -42,8 +42,8 @@ const defaultAnswers = (): EditableAnswer[] => [1, 2, 3, 4].map((_, i) => ({
 }))
 
 const tfAnswers = (): EditableAnswer[] => [
-  { strAnswerText: 'Vrai', strAnswerLabel: 'A', bIsCorrect: false, intSortOrder: 1 },
-  { strAnswerText: 'Faux', strAnswerLabel: 'B', bIsCorrect: false, intSortOrder: 2 },
+  { strAnswerText: 'True', strAnswerLabel: 'A', bIsCorrect: false, intSortOrder: 1 },
+  { strAnswerText: 'False', strAnswerLabel: 'B', bIsCorrect: false, intSortOrder: 2 },
 ]
 
 const emptyForm = (): FormState => ({
@@ -81,8 +81,8 @@ function AnswerSection({ list, setList, isTF, onDelete }: {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-        <h2 className="text-sm font-semibold text-gray-900">Réponses</h2>
-        <span className="text-[11px] text-gray-400 bg-gray-50 px-2.5 py-1 rounded-full border border-gray-100">Cochez la/les bonne(s)</span>
+        <h2 className="text-sm font-semibold text-gray-900">Answers</h2>
+        <span className="text-[11px] text-gray-400 bg-gray-50 px-2.5 py-1 rounded-full border border-gray-100">Select the correct answer(s)</span>
       </div>
       <div className="p-5 flex flex-col gap-3">
         {list.map((a, i) => (
@@ -93,7 +93,7 @@ function AnswerSection({ list, setList, isTF, onDelete }: {
             <input
               value={a.strAnswerText}
               onChange={e => setList(list.map((x, xi) => xi === i ? { ...x, strAnswerText: e.target.value } : x))}
-              placeholder={`Réponse ${a.strAnswerLabel}`}
+              placeholder={`Answer ${a.strAnswerLabel}`}
               className="flex-1 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all bg-white"
             />
             <button
@@ -125,7 +125,7 @@ function AnswerSection({ list, setList, isTF, onDelete }: {
             onClick={() => setList([...list, { strAnswerText: '', strAnswerLabel: labelFor(list.length), bIsCorrect: false, intSortOrder: list.length + 1 }])}
             className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium mt-2 w-fit"
           >
-            <PlusCircle size={15} /> Ajouter une réponse
+            <PlusCircle size={15} /> Add Answer
           </button>
         )}
       </div>
@@ -142,22 +142,22 @@ function MetaForm({ f, setF, disableDomain, domains }: {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
       <div className="px-5 py-4 border-b border-gray-100">
-        <h2 className="text-sm font-semibold text-gray-900">Informations de la question</h2>
+        <h2 className="text-sm font-semibold text-gray-900">Question Details</h2>
       </div>
       <div className="p-5 flex flex-col gap-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className={labelCls}>Domaine</label>
+            <label className={labelCls}>Domain</label>
             {disableDomain
               ? <div className="border border-gray-100 bg-gray-50 rounded-xl px-3.5 py-2.5 text-sm text-gray-500 font-medium">{f.strDomainCode}</div>
               : <select required value={f.strDomainCode} onChange={e => setF({ ...f, strDomainCode: e.target.value })} className={inputCls}>
-                  <option value="">— Choisir —</option>
+                  <option value="">— Select —</option>
                   {domains.map(d => <option key={d.strDomainCode} value={d.strDomainCode}>{d.strLabel}</option>)}
                 </select>
             }
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className={labelCls}>Difficulté</label>
+            <label className={labelCls}>Difficulty</label>
             <select value={f.emDifficulty} onChange={e => setF({ ...f, emDifficulty: e.target.value })} className={inputCls}>
               {DIFFICULTIES.map(o => <option key={o}>{o}</option>)}
             </select>
@@ -168,35 +168,35 @@ function MetaForm({ f, setF, disableDomain, domains }: {
               onChange={e => setF({ ...f, intPointValue: +e.target.value })} className={inputCls} />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className={labelCls}>Temps limite (ms)</label>
+            <label className={labelCls}>Time Limit (ms)</label>
             <input type="number" min={1000} value={f.intTimeLimitMs}
               onChange={e => setF({ ...f, intTimeLimitMs: +e.target.value })} className={inputCls} />
           </div>
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className={labelCls}>Texte de la question <span className="text-red-400">*</span></label>
+          <label className={labelCls}>Question Text <span className="text-red-400">*</span></label>
           <RichTextEditor
             value={f.strQuestionText}
             onChange={val => setF({ ...f, strQuestionText: val })}
-            placeholder="Saisissez l'énoncé de la question…"
+            placeholder="Enter the question text..."
             minHeight="110px"
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className={labelCls}>Explication <span className="text-gray-300">(optionnel)</span></label>
+            <label className={labelCls}>Explanation <span className="text-gray-300">(optional)</span></label>
             <textarea rows={3} value={f.strExplanation}
               onChange={e => setF({ ...f, strExplanation: e.target.value })}
-              placeholder="Explication de la bonne réponse…"
+              placeholder="Explain the correct answer..."
               className={`${inputCls} resize-none`} />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className={labelCls}>Indice <span className="text-gray-300">(optionnel)</span></label>
+            <label className={labelCls}>Hint <span className="text-gray-300">(optional)</span></label>
             <textarea rows={3} value={f.strHint}
               onChange={e => setF({ ...f, strHint: e.target.value })}
-              placeholder="Indice pour guider l'utilisateur…"
+              placeholder="Hint to guide the user..."
               className={`${inputCls} resize-none`} />
           </div>
         </div>
@@ -232,7 +232,7 @@ export default function AdminQuestionsPage() {
     api.get<DomainResponse[]>('/api/v1/domains/all').then(d => {
       setDomains(d)
     }).catch((err: unknown) => {
-      setLoadError((err as { message?: string })?.message ?? 'Impossible de charger les domaines')
+      setLoadError((err as { message?: string })?.message ?? 'Unable to load domains')
     })
   }, [])
 
@@ -244,7 +244,7 @@ export default function AdminQuestionsPage() {
       .then(setQuestions)
       .catch((err: unknown) => {
         setQuestions([])
-        setLoadError((err as { message?: string })?.message ?? 'Impossible de charger les questions')
+        setLoadError((err as { message?: string })?.message ?? 'Unable to load questions')
       })
       .finally(() => setLoading(false))
   }, [selectedDomain])
@@ -257,15 +257,15 @@ export default function AdminQuestionsPage() {
       setQuestions(data)
     } catch (err: unknown) {
       setQuestions([])
-      setLoadError((err as { message?: string })?.message ?? 'Impossible de charger les questions')
+      setLoadError((err as { message?: string })?.message ?? 'Unable to load questions')
       throw err
     }
   }
 
   const handleCreate = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    if (!answers.some(a => a.bIsCorrect)) { setError('Au moins une bonne réponse requise'); return }
-    if (answers.some(a => !a.strAnswerText.trim())) { setError('Toutes les réponses doivent avoir un texte'); return }
+    if (!answers.some(a => a.bIsCorrect)) { setError('At least one correct answer is required'); return }
+    if (answers.some(a => !a.strAnswerText.trim())) { setError('Every answer must have text'); return }
     setSaving(true); setError('')
     try {
       const targetDomain = form.strDomainCode || selectedDomain
@@ -282,7 +282,7 @@ export default function AdminQuestionsPage() {
         reloadDomain(targetDomain).catch(() => {})
       }
     } catch (err: unknown) {
-      setError((err as { message?: string })?.message ?? 'Erreur lors de la création')
+      setError((err as { message?: string })?.message ?? 'Failed to create question')
     } finally { setSaving(false) }
   }
 
@@ -307,8 +307,8 @@ export default function AdminQuestionsPage() {
   const handleSaveEdit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     if (!editQ) return
-    if (!editAnswers.some(a => a.bIsCorrect)) { setError('Au moins une bonne réponse requise'); return }
-    if (editAnswers.some(a => !a.strAnswerText.trim())) { setError('Toutes les réponses doivent avoir un texte'); return }
+    if (!editAnswers.some(a => a.bIsCorrect)) { setError('At least one correct answer is required'); return }
+    if (editAnswers.some(a => !a.strAnswerText.trim())) { setError('Every answer must have text'); return }
     setSaving(true); setError('')
     try {
       await api.patch(`/api/v1/questions/${editQ.strUuid}`, {
@@ -332,12 +332,12 @@ export default function AdminQuestionsPage() {
       setTab('list')
       await reloadDomain(selectedDomain)
     } catch (err: unknown) {
-      setError((err as { message?: string })?.message ?? 'Erreur')
+      setError((err as { message?: string })?.message ?? 'An error occurred')
     } finally { setSaving(false) }
   }
 
   const handleDelete = async (uuid: string) => {
-    if (!confirm('Désactiver cette question ?')) return
+    if (!confirm('Disable this question?')) return
     await api.delete(`/api/v1/questions/${uuid}`)
     setQuestions(q => q.filter(x => x.strUuid !== uuid))
   }
@@ -357,7 +357,7 @@ export default function AdminQuestionsPage() {
         reloadDomain(targetDomain).catch(() => {})
       }
     } catch (err: unknown) {
-      setImportError((err as { message?: string })?.message ?? 'JSON invalide')
+      setImportError((err as { message?: string })?.message ?? 'Invalid JSON')
     } finally { setSaving(false) }
   }
 
@@ -372,17 +372,17 @@ export default function AdminQuestionsPage() {
       ),
     },
     {
-      key: 'emDifficulty', header: 'Difficulté', sortable: true,
+      key: 'emDifficulty', header: 'Difficulty', sortable: true,
       render: q => (
         <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${diffColor(q.emDifficulty)}`}>
           {q.emDifficulty}
         </span>
       ),
     },
-    { key: 'strDomainCode', header: 'Domaine', sortable: true, render: q => <span className="text-xs text-gray-500">{q.strDomainCode}</span> },
+    { key: 'strDomainCode', header: 'Domain', sortable: true, render: q => <span className="text-xs text-gray-500">{q.strDomainCode}</span> },
     { key: 'emQuestionType', header: 'Type', render: q => <span className="text-xs text-gray-500">{q.emQuestionType}</span> },
     { key: 'intPointValue', header: 'Points', sortable: true, render: q => <span className="text-gray-600">{q.intPointValue}</span> },
-    { key: 'answers', header: 'Réponses', render: q => <span className="text-gray-600">{q.answers?.length ?? 0}</span> },
+    { key: 'answers', header: 'Answers', render: q => <span className="text-gray-600">{q.answers?.length ?? 0}</span> },
     {
       key: 'actions', header: 'Actions',
       render: q => (
@@ -399,11 +399,11 @@ export default function AdminQuestionsPage() {
   ]
 
   const tabs: { key: Tab; label: string }[] = [
-    { key: 'list', label: 'Liste' },
-    { key: 'create', label: 'Créer' },
+    { key: 'list', label: 'List' },
+    { key: 'create', label: 'Create' },
     { key: 'import', label: 'Import' },
   ]
-  if (tab === 'edit') tabs.push({ key: 'edit', label: 'Modifier' })
+  if (tab === 'edit') tabs.push({ key: 'edit', label: 'Edit' })
 
   const btnPrimary = 'flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded-xl py-2.5 text-sm font-semibold flex items-center justify-center gap-2 transition-colors'
   const btnSecondary = 'flex-1 border border-gray-200 rounded-xl py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors'
@@ -413,16 +413,16 @@ export default function AdminQuestionsPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Questions</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Gérez la banque de questions du CCAT.</p>
+          <p className="text-sm text-gray-500 mt-0.5">Manage the CCAT question bank.</p>
         </div>
         <div className="flex gap-2">
           <button onClick={() => { setImportError(''); setTab('import') }}
             className="flex items-center gap-2 border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
-            <Upload size={14} /> Import JSON
+            <Upload size={14} /> JSON Import
           </button>
           <button onClick={() => { setForm(emptyForm()); setAnswers(defaultAnswers()); setError(''); setTab('create') }}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
-            <Plus size={15} /> Nouvelle question
+            <Plus size={15} /> New Question
           </button>
         </div>
       </div>
@@ -443,11 +443,11 @@ export default function AdminQuestionsPage() {
       {tab === 'list' && (
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <label className="text-sm font-medium text-gray-700 shrink-0">Domaine :</label>
+            <label className="text-sm font-medium text-gray-700 shrink-0">Domain:</label>
             <div className="relative">
               <select value={selectedDomain} onChange={e => setSelectedDomain(e.target.value)}
                 className="border border-gray-200 rounded-xl px-3.5 py-2 pr-9 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 appearance-none transition-all bg-white">
-                <option value="">Tous les domaines</option>
+                <option value="">All domains</option>
                 {domains.map(d => <option key={d.strDomainCode} value={d.strDomainCode}>{d.strLabel}</option>)}
               </select>
               <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -460,12 +460,12 @@ export default function AdminQuestionsPage() {
               <button
                 onClick={() => reloadDomain(selectedDomain).catch(() => {})}
                 className="shrink-0 text-xs font-semibold underline hover:no-underline"
-              >Réessayer</button>
+              >Retry</button>
             </div>
           )}
           {loading
             ? <div className="flex justify-center py-20"><Loader2 size={24} className="animate-spin text-blue-600" /></div>
-            : <DataTable data={questions} columns={columns} searchPlaceholder="Rechercher une question…" emptyMessage={selectedDomain ? 'Aucune question pour ce domaine.' : 'Aucune question disponible.'} />
+            : <DataTable data={questions} columns={columns} searchPlaceholder="Search a question..." emptyMessage={selectedDomain ? 'No questions for this domain.' : 'No questions available.'} />
           }
         </div>
       )}
@@ -476,16 +476,16 @@ export default function AdminQuestionsPage() {
           {error && <p className="text-sm text-red-600 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl mb-4">{error}</p>}
           <form onSubmit={handleCreate} className="flex flex-col gap-5">
             <div className="grid lg:grid-cols-2 gap-5 items-start">
-              {/* Colonne gauche */}
+              {/* Left column */}
               <div className="flex flex-col gap-5">
                 <MetaForm f={form} setF={setForm} domains={domains} />
                 <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
                   <div className="px-5 py-4 border-b border-gray-100">
-                    <h2 className="text-sm font-semibold text-gray-900">Type de question</h2>
+                    <h2 className="text-sm font-semibold text-gray-900">Question Type</h2>
                   </div>
                   <div className="p-5 grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
-                      <label className={labelCls}>Type de question</label>
+                      <label className={labelCls}>Question Type</label>
                       <select value={form.emQuestionType} onChange={e => {
                         const t = e.target.value
                         setForm(f => ({ ...f, emQuestionType: t }))
@@ -495,7 +495,7 @@ export default function AdminQuestionsPage() {
                       </select>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className={labelCls}>Type de contenu</label>
+                      <label className={labelCls}>Content Type</label>
                       <select value={form.emContentType}
                         onChange={e => setForm(f => ({ ...f, emContentType: e.target.value }))} className={inputCls}>
                         {CONTENTS.map(o => <option key={o}>{o}</option>)}
@@ -504,13 +504,13 @@ export default function AdminQuestionsPage() {
                   </div>
                 </div>
               </div>
-              {/* Colonne droite */}
+              {/* Right column */}
               <div className="flex flex-col gap-5">
                 <AnswerSection list={answers} setList={setAnswers} isTF={form.emQuestionType === 'TRUE_FALSE'} />
                 <div className="flex gap-3">
-                  <button type="button" onClick={() => setTab('list')} className={btnSecondary}>Annuler</button>
+                  <button type="button" onClick={() => setTab('list')} className={btnSecondary}>Cancel</button>
                   <button type="submit" disabled={saving} className={btnPrimary}>
-                    {saving ? <Loader2 size={15} className="animate-spin" /> : <><Check size={15} /> Créer la question</>}
+                    {saving ? <Loader2 size={15} className="animate-spin" /> : <><Check size={15} /> Create Question</>}
                   </button>
                 </div>
               </div>
@@ -525,9 +525,9 @@ export default function AdminQuestionsPage() {
           {error && <p className="text-sm text-red-600 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl mb-4">{error}</p>}
           <form onSubmit={handleSaveEdit} className="flex flex-col gap-5">
             <div className="grid lg:grid-cols-2 gap-5 items-start">
-              {/* Colonne gauche */}
+              {/* Left column */}
               <MetaForm f={editForm} setF={setEditForm} domains={domains} disableDomain />
-              {/* Colonne droite */}
+              {/* Right column */}
               <div className="flex flex-col gap-5">
                 <AnswerSection
                   list={editAnswers} setList={setEditAnswers}
@@ -535,9 +535,9 @@ export default function AdminQuestionsPage() {
                   onDelete={id => setDeletedIds(prev => [...prev, id])}
                 />
                 <div className="flex gap-3">
-                  <button type="button" onClick={() => setTab('list')} className={btnSecondary}>Annuler</button>
+                  <button type="button" onClick={() => setTab('list')} className={btnSecondary}>Cancel</button>
                   <button type="submit" disabled={saving} className={btnPrimary}>
-                    {saving ? <Loader2 size={15} className="animate-spin" /> : <><Check size={15} /> Enregistrer</>}
+                    {saving ? <Loader2 size={15} className="animate-spin" /> : <><Check size={15} /> Save</>}
                   </button>
                 </div>
               </div>
@@ -551,8 +551,8 @@ export default function AdminQuestionsPage() {
         <div className="max-w-2xl">
           <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-gray-100">
-              <h2 className="text-sm font-semibold text-gray-900">Import JSON</h2>
-              <p className="text-xs text-gray-500 mt-0.5">Tableau JSON de questions avec <code className="bg-gray-100 px-1 rounded font-mono">answers</code>.</p>
+              <h2 className="text-sm font-semibold text-gray-900">JSON Import</h2>
+              <p className="text-xs text-gray-500 mt-0.5">JSON array of questions with <code className="bg-gray-100 px-1 rounded font-mono">answers</code>.</p>
             </div>
             <div className="p-5 flex flex-col gap-4">
               {importError && <p className="text-sm text-red-600 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl">{importError}</p>}
@@ -560,9 +560,9 @@ export default function AdminQuestionsPage() {
                 placeholder={`[\n  {\n    "strDomainCode": "VERBAL",\n    "emDifficulty": "MEDIUM",\n    "emQuestionType": "MULTIPLE_CHOICE",\n    "emContentType": "TEXT",\n    "strQuestionText": "...",\n    "answers": [\n      {"lgQuestionId":0,"strAnswerText":"A","strAnswerLabel":"A","bIsCorrect":true,"intSortOrder":1}\n    ]\n  }\n]`}
                 className="border border-gray-200 rounded-xl px-3.5 py-3 text-sm font-mono focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all resize-none w-full bg-white" />
               <div className="flex gap-3">
-                <button onClick={() => setTab('list')} className={btnSecondary}>Annuler</button>
+                <button onClick={() => setTab('list')} className={btnSecondary}>Cancel</button>
                 <button onClick={handleBulkImport} disabled={saving || !importJson.trim()} className={btnPrimary}>
-                  {saving ? <Loader2 size={15} className="animate-spin" /> : <><Upload size={15} /> Importer</>}
+                  {saving ? <Loader2 size={15} className="animate-spin" /> : <><Upload size={15} /> Import</>}
                 </button>
               </div>
             </div>

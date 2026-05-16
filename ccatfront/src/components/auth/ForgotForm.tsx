@@ -26,7 +26,7 @@ export default function ForgotForm({ email, onEmailChange, onNavigate, onSubmit 
       await authService.forgotPassword(email)
       onSubmit()
     } catch (err: unknown) {
-      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Erreur lors de l\'envoi'
+      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Failed to send reset email'
       setError(String(msg))
     } finally {
       setLoading(false)

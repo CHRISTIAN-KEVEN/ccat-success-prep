@@ -8,7 +8,7 @@ import type { UserResponse } from '@/lib/authService'
 export default function SettingsPage() {
   const { user, saveSession } = useAuth()
 
-  const [profile, setProfile] = useState({ strFirstName: '', strLastName: '', strLocale: 'fr' })
+  const [profile, setProfile] = useState({ strFirstName: '', strLastName: '', strLocale: 'en' })
   const [passwords, setPasswords] = useState({ strCurrentPassword: '', strNewPassword: '', confirm: '' })
   const [loadingProfile, setLoadingProfile] = useState(false)
   const [loadingPwd, setLoadingPwd] = useState(false)
@@ -23,10 +23,10 @@ export default function SettingsPage() {
       setProfile({
         strFirstName: u.strFirstName,
         strLastName: u.strLastName,
-        strLocale: u.strLocale ?? 'fr',
+        strLocale: u.strLocale ?? 'en',
       })
     }).catch(() => {
-      if (user) setProfile({ strFirstName: user.strFirstName, strLastName: user.strLastName, strLocale: user.strLocale ?? 'fr' })
+      if (user) setProfile({ strFirstName: user.strFirstName, strLastName: user.strLastName, strLocale: user.strLocale ?? 'en' })
     })
   }, [])
 
@@ -43,7 +43,7 @@ export default function SettingsPage() {
       setSavedProfile(true)
       setTimeout(() => setSavedProfile(false), 2500)
     } catch (err: unknown) {
-      setErrorProfile(err && typeof err === 'object' && 'message' in err ? String((err as { message: string }).message) : 'Erreur')
+      setErrorProfile(err && typeof err === 'object' && 'message' in err ? String((err as { message: string }).message) : 'An error occurred')
     } finally {
       setLoadingProfile(false)
     }
@@ -51,7 +51,7 @@ export default function SettingsPage() {
 
   const handleChangePassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (passwords.strNewPassword !== passwords.confirm) { setErrorPwd('Les mots de passe ne correspondent pas'); return }
+    if (passwords.strNewPassword !== passwords.confirm) { setErrorPwd('Passwords do not match'); return }
     setErrorPwd('')
     setLoadingPwd(true)
     try {
@@ -60,7 +60,7 @@ export default function SettingsPage() {
       setSavedPwd(true)
       setTimeout(() => setSavedPwd(false), 2500)
     } catch (err: unknown) {
-      setErrorPwd(err && typeof err === 'object' && 'message' in err ? String((err as { message: string }).message) : 'Erreur')
+      setErrorPwd(err && typeof err === 'object' && 'message' in err ? String((err as { message: string }).message) : 'An error occurred')
     } finally {
       setLoadingPwd(false)
     }
@@ -92,12 +92,12 @@ export default function SettingsPage() {
         <form onSubmit={handleSaveProfile} className="flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-700">Prénom</label>
+              <label className="text-sm font-medium text-gray-700">First Name</label>
               <input type="text" value={profile.strFirstName} onChange={e => setProfile(p => ({ ...p, strFirstName: e.target.value }))}
                 className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-700">Nom</label>
+              <label className="text-sm font-medium text-gray-700">Last Name</label>
               <input type="text" value={profile.strLastName} onChange={e => setProfile(p => ({ ...p, strLastName: e.target.value }))}
                 className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
@@ -107,10 +107,10 @@ export default function SettingsPage() {
                 className="border border-gray-100 bg-gray-50 rounded-xl px-3 py-2.5 text-sm text-gray-400" />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-700">Langue</label>
+              <label className="text-sm font-medium text-gray-700">Language</label>
               <select value={profile.strLocale} onChange={e => setProfile(p => ({ ...p, strLocale: e.target.value }))}
                 className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition">
-                <option value="fr">Français</option>
+                <option value="fr">French</option>
                 <option value="en">English</option>
               </select>
             </div>
@@ -118,7 +118,7 @@ export default function SettingsPage() {
           <div className="flex justify-end">
             <button type="submit" disabled={loadingProfile}
               className={`px-6 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2 transition-colors ${savedProfile ? 'bg-green-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
-              {loadingProfile ? <Loader2 size={15} className="animate-spin" /> : savedProfile ? '✓ Enregistré!' : 'Enregistrer'}
+              {loadingProfile ? <Loader2 size={15} className="animate-spin" /> : savedProfile ? '✓ Saved!' : 'Save'}
             </button>
           </div>
         </form>
@@ -128,27 +128,27 @@ export default function SettingsPage() {
       <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-7">
         <div className="flex items-center gap-3 mb-6 pb-5 border-b border-gray-100">
           <Lock size={20} className="text-gray-400" />
-          <h1 className="text-xl font-bold text-gray-900">Changer le mot de passe</h1>
+          <h1 className="text-xl font-bold text-gray-900">Change Password</h1>
         </div>
 
         {errorPwd && <p className="text-sm text-red-500 bg-red-50 px-3 py-2 rounded-lg mb-4">{errorPwd}</p>}
 
         <form onSubmit={handleChangePassword} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-gray-700">Mot de passe actuel</label>
+            <label className="text-sm font-medium text-gray-700">Current Password</label>
             <input type="password" required value={passwords.strCurrentPassword}
               onChange={e => setPasswords(p => ({ ...p, strCurrentPassword: e.target.value }))}
               className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+              <label className="text-sm font-medium text-gray-700">New Password</label>
               <input type="password" required minLength={8} value={passwords.strNewPassword}
                 onChange={e => setPasswords(p => ({ ...p, strNewPassword: e.target.value }))}
                 className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-700">Confirmer</label>
+              <label className="text-sm font-medium text-gray-700">Confirm</label>
               <input type="password" required minLength={8} value={passwords.confirm}
                 onChange={e => setPasswords(p => ({ ...p, confirm: e.target.value }))}
                 className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" />
@@ -157,7 +157,7 @@ export default function SettingsPage() {
           <div className="flex justify-end">
             <button type="submit" disabled={loadingPwd}
               className={`px-6 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2 transition-colors ${savedPwd ? 'bg-green-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
-              {loadingPwd ? <Loader2 size={15} className="animate-spin" /> : savedPwd ? '✓ Modifié!' : 'Changer le mot de passe'}
+              {loadingPwd ? <Loader2 size={15} className="animate-spin" /> : savedPwd ? '✓ Updated!' : 'Change Password'}
             </button>
           </div>
         </form>

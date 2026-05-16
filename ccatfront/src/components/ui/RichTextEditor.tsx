@@ -15,7 +15,7 @@ interface RichTextEditorProps {
 export default function RichTextEditor({
   value,
   onChange,
-  placeholder = 'Saisissez le texte…',
+  placeholder = 'Enter text...',
   minHeight = '120px',
 }: RichTextEditorProps) {
   const editor = useEditor({

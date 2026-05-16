@@ -23,7 +23,7 @@ export default function ResetForm({ email, otp, onSubmit }: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (newPassword !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas')
+      setError('Passwords do not match')
       return
     }
     setError('')
@@ -32,7 +32,7 @@ export default function ResetForm({ email, otp, onSubmit }: Props) {
       await authService.resetPassword(email, otp, newPassword)
       onSubmit()
     } catch (err: unknown) {
-      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Erreur lors de la réinitialisation'
+      const msg = err && typeof err === 'object' && 'message' in err ? (err as { message: string }).message : 'Password reset failed'
       setError(String(msg))
     } finally {
       setLoading(false)

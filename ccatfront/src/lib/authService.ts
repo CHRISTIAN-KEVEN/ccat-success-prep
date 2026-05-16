@@ -26,7 +26,7 @@ export const authService = {
     api.post<AuthResponse>('/api/v1/auth/login', { strEmail, strPassword }),
 
   register: (strEmail: string, strPassword: string, strFirstName: string, strLastName: string) =>
-    api.post<void>('/api/v1/auth/register', { strEmail, strPassword, strFirstName, strLastName, strLocale: 'fr' }),
+    api.post<void>('/api/v1/auth/register', { strEmail, strPassword, strFirstName, strLastName, strLocale: 'en' }),
 
   verifyEmail: (strEmail: string, strOtp: string) =>
     api.post<void>('/api/v1/auth/verify-email', { strEmail, strOtp }),

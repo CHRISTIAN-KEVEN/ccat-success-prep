@@ -46,7 +46,7 @@ function BookmarkCard({ bm, onRemove }: { bm: BookmarkResponse; onRemove: (id: n
           <button
             onClick={e => { e.stopPropagation(); onRemove(bm.lgQuestionId) }}
             className="text-blue-400 hover:text-red-400 transition-colors"
-            title="Retirer le bookmark"
+            title="Remove bookmark"
           >
             <BookmarkX size={15} />
           </button>
@@ -69,14 +69,14 @@ function BookmarkCard({ bm, onRemove }: { bm: BookmarkResponse; onRemove: (id: n
             <div className="flex gap-3 bg-blue-50 border border-blue-100 rounded-xl px-4 py-4">
               <Lightbulb size={16} className="text-blue-400 shrink-0 mt-0.5" />
               <div>
-                <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wide mb-1">Explication</p>
+                <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wide mb-1">Explanation</p>
                 <p className="text-sm text-blue-700 leading-relaxed">{bm.strExplanation}</p>
               </div>
             </div>
           )}
 
           <div className="flex items-center gap-1 text-[11px] text-gray-400">
-            <Clock size={10} /> Ajouté le {new Date(bm.dtCreated).toLocaleDateString('fr-FR')}
+            <Clock size={10} /> Added on {new Date(bm.dtCreated).toLocaleDateString('en-US')}
           </div>
         </div>
       )}
@@ -111,15 +111,15 @@ export default function BookmarksPage() {
         <Bookmark size={20} className="text-blue-600" />
         <div>
           <h1 className="text-xl font-bold text-gray-900">Bookmarks</h1>
-          <p className="text-xs text-gray-400 mt-0.5">{bookmarks.length} question{bookmarks.length !== 1 ? 's' : ''} sauvegardée{bookmarks.length !== 1 ? 's' : ''}</p>
+          <p className="text-xs text-gray-400 mt-0.5">{bookmarks.length} saved question{bookmarks.length !== 1 ? 's' : ''}</p>
         </div>
       </div>
 
       {bookmarks.length === 0 ? (
         <div className="bg-white border border-gray-200 rounded-2xl p-12 text-center flex flex-col items-center gap-3">
           <Bookmark size={32} className="text-gray-200" />
-          <p className="text-sm font-medium text-gray-500">Aucun bookmark pour l&apos;instant</p>
-          <p className="text-xs text-gray-400">Clique sur l&apos;icône <Bookmark size={11} className="inline" /> dans la revue d&apos;un test pour sauvegarder une question.</p>
+          <p className="text-sm font-medium text-gray-500">No bookmarks yet</p>
+          <p className="text-xs text-gray-400">Click the <Bookmark size={11} className="inline" /> icon in a test review to save a question.</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">

@@ -77,10 +77,10 @@ function QuestionCard({ item, index, bookmarked, onToggleBookmark }: {
 
   const leftBar = item.bWasSkipped ? 'bg-gray-300' : item.bIsCorrect ? 'bg-green-400' : 'bg-red-400'
   const statusBadge = item.bWasSkipped
-    ? <span className="flex items-center gap-1 text-[11px] font-semibold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full"><MinusCircle size={11} /> Passée</span>
+    ? <span className="flex items-center gap-1 text-[11px] font-semibold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full"><MinusCircle size={11} /> Skipped</span>
     : item.bIsCorrect
-      ? <span className="flex items-center gap-1 text-[11px] font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full"><CheckCircle2 size={11} /> Correcte</span>
-      : <span className="flex items-center gap-1 text-[11px] font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded-full"><XCircle size={11} /> Erronée</span>
+      ? <span className="flex items-center gap-1 text-[11px] font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full"><CheckCircle2 size={11} /> Correct</span>
+      : <span className="flex items-center gap-1 text-[11px] font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded-full"><XCircle size={11} /> Incorrect</span>
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
@@ -142,7 +142,7 @@ function QuestionCard({ item, index, bookmarked, onToggleBookmark }: {
           {item.bWasSkipped && (
             <div className="flex items-center gap-2 text-sm text-gray-400 bg-gray-50 px-4 py-3 rounded-xl">
               <SkipForward size={15} className="shrink-0" />
-              Question passée — aucune réponse sélectionnée.
+              Question skipped — no answer selected.
             </div>
           )}
 
@@ -151,7 +151,7 @@ function QuestionCard({ item, index, bookmarked, onToggleBookmark }: {
             <div className="flex gap-3 bg-blue-50 border border-blue-100 rounded-xl px-4 py-4">
               <Lightbulb size={16} className="text-blue-400 shrink-0 mt-0.5" />
               <div>
-                <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wide mb-1">Explication</p>
+                <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wide mb-1">Explanation</p>
                 <p className="text-sm text-blue-700 leading-relaxed">{item.strExplanation}</p>
               </div>
             </div>
@@ -173,7 +173,7 @@ function QuestionCard({ item, index, bookmarked, onToggleBookmark }: {
             </span>
             {item.bWasChanged && (
               <span className="text-[11px] font-medium text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
-                Réponse modifiée
+                Answer changed
               </span>
             )}
           </div>
@@ -184,10 +184,10 @@ function QuestionCard({ item, index, bookmarked, onToggleBookmark }: {
 }
 
 const FILTERS: { key: Filter; label: string }[] = [
-  { key: 'ALL',     label: 'Toutes' },
-  { key: 'CORRECT', label: 'Correctes' },
-  { key: 'WRONG',   label: 'Erronées' },
-  { key: 'SKIPPED', label: 'Passées' },
+  { key: 'ALL',     label: 'All' },
+  { key: 'CORRECT', label: 'Correct' },
+  { key: 'WRONG',   label: 'Incorrect' },
+  { key: 'SKIPPED', label: 'Skipped' },
 ]
 
 export default function ReviewPage() {
@@ -215,7 +215,7 @@ export default function ReviewPage() {
     bookmarkService.getMyBookmarkedIds().then(ids => setBookmarked(new Set(ids)))
     sessionService.getReview(sessionId)
       .then(setItems)
-      .catch(err => setError(err?.message ?? 'Impossible de charger la revue'))
+      .catch(err => setError(err?.message ?? 'Unable to load the review'))
       .finally(() => setLoading(false))
   }, [sessionId])
 
@@ -245,12 +245,12 @@ export default function ReviewPage() {
         <XCircle size={24} className="text-red-400" />
       </div>
       <div>
-        <p className="font-semibold text-gray-800">Erreur de chargement</p>
+        <p className="font-semibold text-gray-800">Loading error</p>
         <p className="text-sm text-gray-400 mt-1">{error}</p>
       </div>
       <button onClick={() => router.back()}
         className="text-sm font-medium text-blue-600 hover:underline">
-        ← Retour
+        ← Back
       </button>
     </div>
   )
@@ -261,15 +261,15 @@ export default function ReviewPage() {
       <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 sm:px-6 py-3 flex items-center gap-4">
         <button onClick={() => router.back()}
           className="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors shrink-0">
-          <ArrowLeft size={15} /> Retour
+          <ArrowLeft size={15} /> Back
         </button>
         <div className="flex-1 min-w-0">
-          <h1 className="text-sm font-bold text-gray-900 truncate">Revue du test</h1>
+          <h1 className="text-sm font-bold text-gray-900 truncate">Test Review</h1>
           <p className="text-[11px] text-gray-400">{items.length} questions · session #{sessionId}</p>
         </div>
         <span className={`text-xs font-bold px-3 py-1 rounded-full shrink-0
           ${accuracy >= 70 ? 'bg-green-100 text-green-700' : accuracy >= 50 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-600'}`}>
-          {correct}/{items.length} correctes
+          {correct}/{items.length} correct
         </span>
       </div>
 
@@ -281,15 +281,15 @@ export default function ReviewPage() {
           <div className="flex-1 grid grid-cols-3 gap-4">
             <div className="text-center">
               <p className="text-2xl font-extrabold text-green-600">{correct}</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">Correctes</p>
+              <p className="text-[11px] text-gray-400 mt-0.5">Correct</p>
             </div>
             <div className="text-center border-x border-gray-100">
               <p className="text-2xl font-extrabold text-red-500">{wrong}</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">Erronées</p>
+              <p className="text-[11px] text-gray-400 mt-0.5">Incorrect</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-extrabold text-gray-400">{skipped}</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">Passées</p>
+              <p className="text-[11px] text-gray-400 mt-0.5">Skipped</p>
             </div>
           </div>
         </div>
@@ -317,7 +317,7 @@ export default function ReviewPage() {
         <div className="flex flex-col gap-2.5">
           {filtered.length === 0 ? (
             <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center text-sm text-gray-400">
-              Aucune question dans cette catégorie.
+              No questions in this category.
             </div>
           ) : filtered.map((item) => (
             <QuestionCard key={item.lgQuestionId} item={item} index={items.indexOf(item)} bookmarked={bookmarked.has(item.lgQuestionId)} onToggleBookmark={toggleBookmark} />

@@ -36,9 +36,9 @@ export function DataTable<T extends object>({
   data,
   columns,
   searchable = true,
-  searchPlaceholder = 'Rechercher…',
+  searchPlaceholder = 'Search...',
   pageSize = 10,
-  emptyMessage = 'Aucune donnée.',
+  emptyMessage = 'No data available.',
   toolbar,
 }: DataTableProps<T>) {
   const [search, setSearch] = useState('')
@@ -90,7 +90,7 @@ export function DataTable<T extends object>({
             </div>
           )}
           <div className="flex items-center gap-3 ml-auto">
-            <span className="text-xs text-gray-400 whitespace-nowrap">{filtered.length} résultat(s)</span>
+            <span className="text-xs text-gray-400 whitespace-nowrap">{filtered.length} result(s)</span>
             {toolbar}
           </div>
         </div>

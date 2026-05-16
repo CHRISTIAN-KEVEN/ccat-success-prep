@@ -44,7 +44,7 @@ export default function TestPage() {
       })
       .then(qs => { setQuestions(qs); setLoading(false) })
       .catch(err => {
-        const msg = err?.message ?? 'Impossible de démarrer le test'
+        const msg = err?.message ?? 'Unable to start the test'
         setStartError(msg)
         setLoading(false)
       })
@@ -75,7 +75,7 @@ export default function TestPage() {
       setDone(true)
       adviceService.getBySession(sessionId).then(setAdvices).catch(() => {})
     } catch (err) {
-      setFinishError((err as {message?: string})?.message ?? 'Erreur lors de la soumission du test')
+      setFinishError((err as {message?: string})?.message ?? 'Failed to submit the test')
       setDone(true)
     } finally {
       setSubmitting(false)
@@ -126,7 +126,7 @@ export default function TestPage() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center h-full gap-3">
       <Loader2 size={32} className="animate-spin text-blue-600" />
-      <p className="text-sm text-gray-500">Démarrage du test…</p>
+      <p className="text-sm text-gray-500">Starting the test...</p>
     </div>
   )
 
@@ -158,28 +158,28 @@ export default function TestPage() {
 
             {/* Title */}
             <div className="text-center">
-              <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">Test gratuit terminé</p>
+              <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">Free test completed</p>
               <h1 className="text-2xl font-extrabold text-gray-900 leading-tight">
-                Tu as débloqué{' '}
+                You unlocked{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                  ton potentiel
+                  your potential
                 </span>
               </h1>
               <p className="text-xs text-gray-500 mt-2 leading-relaxed">
-                Passe à Premium pour continuer à t&apos;entraîner et décrocher ton score cible.
+                Upgrade to Premium to keep practicing and reach your target score.
               </p>
             </div>
 
             {/* XP earned */}
             <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-200 px-3 py-2 rounded-xl w-full justify-center">
               <Zap size={13} className="text-yellow-500 shrink-0" />
-              <p className="text-[11px] text-yellow-700 font-medium">Tu as gagné <strong>+80 XP</strong> avec ton test gratuit !</p>
+              <p className="text-[11px] text-yellow-700 font-medium">You earned <strong>+80 XP</strong> from your free test!</p>
             </div>
 
             {/* Back link */}
             <button onClick={() => router.push('/dashboard')}
               className="text-[11px] text-gray-400 hover:text-gray-600 transition-colors underline underline-offset-2">
-              Continuer sans upgrader
+              Continue without upgrading
             </button>
           </div>
 
@@ -189,10 +189,10 @@ export default function TestPage() {
             {/* Locked features — 2×2 grid */}
             <div className="grid grid-cols-2 gap-2">
               {[
-                { icon: Infinity,   label: 'Tests illimités',      desc: 'Autant que tu veux' },
-                { icon: Brain,      label: 'Explications IA',      desc: 'Comprends chaque erreur' },
-                { icon: TrendingUp, label: 'Progression',          desc: 'Courbes & domaines faibles' },
-                { icon: BookOpen,   label: "Plan d'étude",         desc: 'Programme 14 jours' },
+                { icon: Infinity,   label: 'Unlimited Tests',      desc: 'As many as you want' },
+                { icon: Brain,      label: 'AI Explanations',      desc: 'Understand every mistake' },
+                { icon: TrendingUp, label: 'Progress Tracking',    desc: 'Trends and weak domains' },
+                { icon: BookOpen,   label: 'Study Plan',           desc: '14-day program' },
               ].map(({ icon: Icon, label, desc }) => (
                 <div key={label} className="flex items-center gap-2.5 bg-gray-50 border border-gray-200 rounded-xl p-3">
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-blue-50 border border-blue-100">
@@ -212,23 +212,23 @@ export default function TestPage() {
               {/* Annual — highlighted */}
               <div className="relative bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-4 border border-blue-500 shadow-lg shadow-blue-200">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-400 text-[9px] font-extrabold text-black px-2.5 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap">
-                  Meilleure offre
+                  Best value
                 </div>
-                <p className="text-[9px] font-bold text-blue-200 uppercase tracking-wide mt-1">Annuel</p>
+                <p className="text-[9px] font-bold text-blue-200 uppercase tracking-wide mt-1">Yearly</p>
                 <p className="text-xl font-extrabold text-white mt-0.5">4,99€<span className="text-xs font-normal text-blue-200">/mois</span></p>
-                <p className="text-[10px] text-blue-200 mt-0.5">59,99€ / an · -50%</p>
+                <p className="text-[10px] text-blue-200 mt-0.5">59,99€ / year · -50%</p>
                 <button className="mt-2.5 w-full bg-white text-blue-700 text-xs font-extrabold py-2 rounded-xl hover:bg-blue-50 transition-colors">
-                  Commencer →
+                  Get Started →
                 </button>
               </div>
 
               {/* Monthly */}
               <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
-                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wide mt-1">Mensuel</p>
+                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wide mt-1">Monthly</p>
                 <p className="text-xl font-extrabold text-gray-900 mt-0.5">9,99€<span className="text-xs font-normal text-gray-400">/mois</span></p>
-                <p className="text-[10px] text-gray-400 mt-0.5">Sans engagement</p>
+                <p className="text-[10px] text-gray-400 mt-0.5">No commitment</p>
                 <button className="mt-2.5 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold py-2 rounded-xl transition-colors border border-gray-200">
-                  Choisir
+                  Choose
                 </button>
               </div>
             </div>
@@ -242,7 +242,7 @@ export default function TestPage() {
         <p className="text-red-500 font-semibold text-center">{startError}</p>
         <button onClick={() => router.push('/dashboard')}
           className="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold">
-          Retour au dashboard
+          Back to dashboard
         </button>
       </div>
     )
@@ -270,8 +270,8 @@ export default function TestPage() {
               <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${isPass ? 'bg-green-100' : pct >= 50 ? 'bg-yellow-100' : 'bg-red-100'}`}>
                 <CheckCircle size={32} className={isPass ? 'text-green-600' : pct >= 50 ? 'text-yellow-500' : 'text-red-500'} />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">Test terminé</h1>
-              <p className="text-sm text-gray-400 mt-0.5">Voici vos résultats</p>
+              <h1 className="text-2xl font-bold text-gray-900">Test completed</h1>
+              <p className="text-sm text-gray-400 mt-0.5">Here are your results</p>
             </div>
 
             <div className="bg-gray-50 rounded-2xl p-5 text-center mb-5">
@@ -280,10 +280,10 @@ export default function TestPage() {
                 <span className="text-2xl text-gray-300 font-normal">/{result.intQuestionCount}</span>
               </p>
               <p className="text-sm text-gray-500 mt-1">
-                {pct}% correct · ~{result.intPercentileEstimate}e percentile · {result.emPaceRating}
+                {pct}% correct · ~{result.intPercentileEstimate}th percentile · {result.emPaceRating}
               </p>
               <span className={`inline-block mt-2 text-xs font-semibold px-3 py-1 rounded-full ${isPass ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
-                {isPass ? '✓ Seuil atteint' : '✗ Seuil non atteint (24/50)'}
+                {isPass ? '✓ Threshold reached' : '✗ Threshold not reached (24/50)'}
               </span>
             </div>
 
@@ -304,11 +304,11 @@ export default function TestPage() {
             <div className="flex gap-3">
               <button onClick={() => window.location.reload()}
                 className="flex-1 flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
-                <RotateCcw size={14} /> Refaire
+                <RotateCcw size={14} /> Retry
               </button>
               <button onClick={() => router.push(`/dashboard/review/${sessionId}`)}
                 className="flex-1 flex items-center justify-center gap-2 border border-blue-200 bg-blue-50 text-blue-700 rounded-xl py-3 text-sm font-semibold hover:bg-blue-100 transition">
-                <BookOpen size={14} /> Voir la revue
+                <BookOpen size={14} /> View review
               </button>
               <button onClick={() => router.push('/dashboard')}
                 className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-sm font-semibold transition">
@@ -321,7 +321,7 @@ export default function TestPage() {
           {advices.length > 0 && (
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide px-1">
-                Conseils personnalisés ({advices.length})
+                Personalized advice ({advices.length})
               </p>
               {advices.map(advice => (
                 <div key={advice.lgId} className="bg-white border border-gray-200 rounded-2xl p-5">
@@ -341,7 +341,7 @@ export default function TestPage() {
                       <div className="flex items-center gap-2 shrink-0">
                         <button onClick={() => handleFeedback(advice.lgId, true)}
                           className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-green-600 transition">
-                          <ThumbsUp size={13} /> Utile
+                          <ThumbsUp size={13} /> Helpful
                         </button>
                         <button onClick={() => handleFeedback(advice.lgId, false)}
                           className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-red-500 transition">
@@ -351,7 +351,7 @@ export default function TestPage() {
                     )}
                     {advice.bWasHelpful !== null && (
                       <span className="text-[11px] text-gray-400">
-                        {advice.bWasHelpful ? '👍 Utile' : '👎 Pas utile'}
+                        {advice.bWasHelpful ? '👍 Helpful' : '👎 Not helpful'}
                       </span>
                     )}
                   </div>
@@ -379,10 +379,10 @@ export default function TestPage() {
           <p className="text-red-500 font-semibold">{finishError}</p>
           <button onClick={() => sessionId && sessionService.getResult(sessionId).then(r => { setResult(r); setFinishError('') }).catch(() => {})}
             className="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold">
-            Récupérer les résultats
+            Fetch results
           </button>
           <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-400 hover:underline">
-            Retour au dashboard
+            Back to dashboard
           </button>
         </>
       ) : (
